@@ -1,0 +1,235 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import matter from 'gray-matter';
+import fs from 'node:fs';
+import path from 'node:path';
+
+export function getStaticPaths() {
+  const docsDir = path.resolve(process.cwd(), '../../docs/apps');
+  const files = fs.readdirSync(docsDir).filter((f: string) => f.endsWith('.md'));
+
+  return files.map((file: string) => {
+    const raw = fs.readFileSync(path.join(docsDir, file), 'utf-8');
+    const { data, content } = matter(raw);
+    const slug = file.replace('.md', '');
+
+    return {
+      params: { slug },
+      props: { frontmatter: data, content, slug },
+    };
+  });
+}
+
+interface Props {
+  frontmatter: {
+    name: string;
+    tagline: string;
+    platform: string;
+    status: string;
+    category: string;
+    icon: string;
+    features: string[];
+    downloadUrl: string;
+    visible: boolean;
+  };
+  content: string;
+  slug: string;
+}
+
+const { frontmatter, slug } = Astro.props;
+const { name, tagline, platform, icon, features, category, downloadUrl } = frontmatter;
+
+const categoryColors: Record<string, string> = {
+  'developer-tools': '#6366f1',
+  'finance': '#34d399',
+  'lifestyle': '#fbbf24',
+};
+const accentColor = categoryColors[category] || '#6366f1';
+---
+
+<Layout title={`${name} — Entity Builders`} description={tagline}>
+  <main>
+    <nav class="nav">
+      <a href="/" class="nav-back">← Back to all apps</a>
+    </nav>
+
+    <article class="app-detail">
+      <div class="app-header">
+        <span class="app-icon">{icon}</span>
+        <div>
+          <h1 class="app-name">{name}</h1>
+          <p class="app-tagline">{tagline}</p>
+        </div>
+      </div>
+
+      <div class="app-meta">
+        <span class="meta-badge" style={`border-color: ${accentColor}33; color: ${accentColor}`}>
+          {platform}
+        </span>
+        <span class="meta-badge meta-category" style={`border-color: ${accentColor}33; background: ${accentColor}11`}>
+          {category.replace('-', ' ')}
+        </span>
+      </div>
+
+      <section class="app-features">
+        <h2>Features</h2>
+        <ul>
+          {features.map((f) => (
+            <li style={`--accent: ${accentColor}`}>{f}</li>
+          ))}
+        </ul>
+      </section>
+
+      {downloadUrl && (
+        <section class="app-download">
+          <a href={downloadUrl} class="download-btn" style={`background: ${accentColor}`}>
+            Download {name}
+          </a>
+        </section>
+      )}
+    </article>
+
+    <Footer />
+  </main>
+</Layout>
+
+<style>
+  main {
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 2rem 0;
+  }
+
+  .nav-back {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: color var(--transition);
+  }
+
+  .nav-back:hover {
+    color: var(--text-primary);
+  }
+
+  .app-detail {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+
+  .app-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .app-icon {
+    font-size: 3.5rem;
+    line-height: 1;
+  }
+
+  .app-name {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+
+  .app-tagline {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+  }
+
+  .app-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .meta-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid;
+    border-radius: 100px;
+  }
+
+  .meta-category {
+    text-transform: capitalize;
+  }
+
+  .app-features h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .app-features ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .app-features li {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .app-features li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.7rem;
+    top: 0.2em;
+  }
+
+  .app-download {
+    margin-top: 2.5rem;
+  }
+
+  .download-btn {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    color: white;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: var(--radius-md);
+    transition: all var(--transition);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (max-width: 640px) {
+    .app-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .app-name {
+      font-size: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,163 @@
+---
+export interface Props {
+  name: string;
+  tagline: string;
+  platform: string;
+  icon: string;
+  slug: string;
+  features: string[];
+  category: string;
+  downloadUrl?: string;
+  index?: number;
+}
+
+const { name, tagline, platform, icon, slug, features, category, downloadUrl, index = 0 } = Astro.props;
+
+const categoryColors: Record<string, string> = {
+  'developer-tools': '#6366f1',
+  'finance': '#34d399',
+  'lifestyle': '#fbbf24',
+};
+
+const accentColor = categoryColors[category] || '#6366f1';
+---
+
+<a href={`/apps/${slug}`} class={`card animate-fade-in animate-delay-${index + 1}`} style={`--accent: ${accentColor}`}>
+  <div class="card-header">
+    <span class="card-icon">{icon}</span>
+    <span class="card-platform">{platform}</span>
+  </div>
+
+  <h3 class="card-title">{name}</h3>
+  <p class="card-tagline">{tagline}</p>
+
+  <ul class="card-features">
+    {features.slice(0, 3).map((f) => (
+      <li>{f}</li>
+    ))}
+  </ul>
+
+  <div class="card-footer">
+    <span class="card-cta">Learn more →</span>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: all var(--transition);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-4px);
+  }
+
+  .card:hover::before {
+    opacity: 1;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .card-icon {
+    font-size: 2.25rem;
+    line-height: 1;
+  }
+
+  .card-platform {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding: 0.25rem 0.625rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .card-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    margin-bottom: 0.375rem;
+    letter-spacing: -0.02em;
+  }
+
+  .card-tagline {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .card-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex: 1;
+  }
+
+  .card-features li {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .card-features li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.6rem;
+    top: 0.15em;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .card-cta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    transition: all var(--transition);
+  }
+
+  .card:hover .card-cta {
+    letter-spacing: 0.02em;
+  }
+</style>

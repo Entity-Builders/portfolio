@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import AppCard from '../components/AppCard.astro';
+import Footer from '../components/Footer.astro';
+import matter from 'gray-matter';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Read all app docs from the monorepo docs folder
+const docsDir = path.resolve(process.cwd(), '../../docs/apps');
+const files = fs.readdirSync(docsDir).filter((f: string) => f.endsWith('.md'));
+
+interface AppData {
+  name: string;
+  tagline: string;
+  platform: string;
+  status: string;
+  category: string;
+  icon: string;
+  features: string[];
+  downloadUrl: string;
+  visible: boolean;
+  slug: string;
+}
+
+const apps: AppData[] = files
+  .map((file: string) => {
+    const raw = fs.readFileSync(path.join(docsDir, file), 'utf-8');
+    const { data } = matter(raw);
+    return {
+      ...data,
+      slug: file.replace('.md', ''),
+    } as AppData;
+  })
+  .filter((app: AppData) => app.visible && app.status === 'active');
+---
+
+<Layout title="Entity Builders — Micro-SaaS Universe">
+  <main>
+    <Hero />
+
+    <section class="apps-section">
+      <div class="section-header">
+        <h2 class="section-title">Our Apps</h2>
+        <p class="section-subtitle">Each app solves one problem — and does it well.</p>
+      </div>
+
+      <div class="apps-grid">
+        {apps.map((app, i) => (
+          <AppCard
+            name={app.name}
+            tagline={app.tagline}
+            platform={app.platform}
+            icon={app.icon}
+            slug={app.slug}
+            features={app.features}
+            category={app.category}
+            downloadUrl={app.downloadUrl}
+            index={i}
+          />
+        ))}
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Layout>
+
+<style>
+  main {
+    position: relative;
+    z-index: 1;
+  }
+
+  .apps-section {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+  }
+
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .apps-section {
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .apps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
