@@ -7,9 +7,9 @@ import matter from 'gray-matter';
 import fs from 'node:fs';
 import path from 'node:path';
 
-// Read all app docs from the monorepo docs folder
-const docsDir = path.resolve(process.cwd(), '../../docs/apps');
-const files = fs.readdirSync(docsDir).filter((f: string) => f.endsWith('.md'));
+// Read all app READMEs from the monorepo apps folders
+const appsDir = path.resolve(process.cwd(), '../../apps');
+const appFolders = fs.readdirSync(appsDir).filter((f: string) => fs.statSync(path.join(appsDir, f)).isDirectory());
 
 interface AppData {
   name: string;
@@ -24,16 +24,23 @@ interface AppData {
   slug: string;
 }
 
-const apps: AppData[] = files
-  .map((file: string) => {
-    const raw = fs.readFileSync(path.join(docsDir, file), 'utf-8');
-    const { data } = matter(raw);
-    return {
-      ...data,
-      slug: file.replace('.md', ''),
-    } as AppData;
+const apps: AppData[] = appFolders
+  .map((folder: string) => {
+    const readmePath = path.join(appsDir, folder, 'README.md');
+    if (!fs.existsSync(readmePath)) return null;
+    try {
+      const raw = fs.readFileSync(readmePath, 'utf-8');
+      const { data } = matter(raw);
+      if (!data || !data.name) return null;
+      return {
+        ...data,
+        slug: folder,
+      } as AppData;
+    } catch (e) {
+      return null;
+    }
   })
-  .filter((app: AppData) => app.visible && app.status === 'active');
+  .filter((app): app is AppData => app !== null && app.visible && app.status === 'active');
 ---
 
 <Layout title="Entity Builders — Micro-SaaS Universe">

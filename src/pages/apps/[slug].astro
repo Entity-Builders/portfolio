@@ -6,19 +6,26 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 export function getStaticPaths() {
-  const docsDir = path.resolve(process.cwd(), '../../docs/apps');
-  const files = fs.readdirSync(docsDir).filter((f: string) => f.endsWith('.md'));
+  const appsDir = path.resolve(process.cwd(), '../../apps');
+  const appFolders = fs.readdirSync(appsDir).filter((f: string) => fs.statSync(path.join(appsDir, f)).isDirectory());
 
-  return files.map((file: string) => {
-    const raw = fs.readFileSync(path.join(docsDir, file), 'utf-8');
-    const { data, content } = matter(raw);
-    const slug = file.replace('.md', '');
+  return appFolders.map((folder: string) => {
+    const readmePath = path.join(appsDir, folder, 'README.md');
+    if (!fs.existsSync(readmePath)) return null;
 
-    return {
-      params: { slug },
-      props: { frontmatter: data, content, slug },
-    };
-  });
+    try {
+      const raw = fs.readFileSync(readmePath, 'utf-8');
+      const { data, content } = matter(raw);
+      if (!data || !data.name || !data.visible || data.status !== 'active') return null;
+      
+      return {
+        params: { slug: folder },
+        props: { frontmatter: data, content, slug: folder },
+      };
+    } catch (e) {
+      return null;
+    }
+  }).filter(Boolean);
 }
 
 interface Props {
