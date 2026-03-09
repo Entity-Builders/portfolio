@@ -1,0 +1,154 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Meet the Builder — Juan Manuel Obrach">
+  <main class="maker-page">
+    <section class="maker-hero">
+      <div class="maker-avatar">
+        <div class="avatar-circle">JO</div>
+      </div>
+      <h1 class="maker-title">Hi, I'm Juan Manuel Obrach.</h1>
+      <p class="maker-subtitle">The architect behind Entity Builders.</p>
+    </section>
+
+    <section class="maker-content">
+      <div class="content-block">
+        <h2>The Vibe Coding Journey</h2>
+        <p>
+          I started Entity Builders with a simple philosophy: build fast, validate quickly, and create tools that solve real problems. As a solo-preneur, I believe in "Vibe Coding"—prioritizing momentum and code reuse to create an interconnected universe of micro-SaaS products.
+        </p>
+        <p>
+          Every app in the Entity Builders ecosystem shares the same core logic and infrastructure, allowing me to ship faster and maintain high quality across the board.
+        </p>
+      </div>
+
+      <div class="content-block">
+        <h2>The Solo-Stack</h2>
+        <ul class="tech-stack">
+          <li><strong>Frontend:</strong> React Native (Expo) & Astro</li>
+          <li><strong>Backend:</strong> Supabase (Auth, Postgres, Realtime)</li>
+          <li><strong>Payments:</strong> Stripe</li>
+          <li><strong>AI:</strong> Gemini & LangChain</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>Let's Connect</h2>
+        <p>I'm always open to chat about tech, micro-SaaS, or new ideas.</p>
+        <div class="social-links">
+          <a href="https://github.com/juanobrach" target="_blank" rel="noopener noreferrer" class="btn">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Layout>
+
+<style>
+  .maker-page {
+    padding-top: 4rem;
+  }
+  
+  .maker-hero {
+    text-align: center;
+    padding: 2rem 2rem 4rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .avatar-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--gradient-hero, linear-gradient(135deg, #6366f1, #a855f7));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+  }
+
+  .maker-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .maker-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+  }
+
+  .maker-content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+
+  .content-block {
+    margin-bottom: 3rem;
+  }
+
+  .content-block h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 0.5rem;
+  }
+
+  .content-block p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .tech-stack {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tech-stack li {
+    background: var(--surface-2);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    font-size: 1.05rem;
+  }
+
+  .tech-stack strong {
+    color: var(--text-primary);
+  }
+
+  .social-links {
+    margin-top: 1.5rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    background: var(--surface-2);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid var(--border-subtle);
+    transition: all 0.2s ease;
+  }
+
+  .btn:hover {
+    background: var(--surface-3);
+    border-color: rgba(168, 85, 247, 0.5);
+  }
+</style>

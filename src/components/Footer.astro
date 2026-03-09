@@ -10,6 +10,9 @@
     <p class="footer-copy">
       &copy; {new Date().getFullYear()} Entity Builders. Built with craft.
     </p>
+    <div class="footer-links">
+      <a href="/maker" class="footer-link">Meet the Builder</a>
+    </div>
   </div>
 </footer>
 
@@ -40,5 +43,20 @@
   .footer-copy {
     font-size: 0.75rem;
     color: var(--text-muted);
+  }
+
+  .footer-links {
+    margin-top: 1rem;
+  }
+
+  .footer-link {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-link:hover {
+    color: var(--text-primary);
   }
 </style>
