@@ -41,20 +41,49 @@ const apps: AppData[] = appFolders
     }
   })
   .filter((app): app is AppData => app !== null && app.visible && app.status === 'active');
+
+const utilityCategories = ['finance', 'b2b', 'developer-tools'];
+const creativeCategories = ['lifestyle', 'media'];
+
+const utilityApps = apps.filter(app => utilityCategories.includes(app.category));
+const creativeApps = apps.filter(app => creativeCategories.includes(app.category));
 ---
 
-<Layout title="Entity Builders — Micro-SaaS Universe">
+<Layout title="Entity Builders — Digital Operations Studio">
   <main>
     <Hero />
 
     <section class="apps-section">
       <div class="section-header">
-        <h2 class="section-title">Our Apps</h2>
-        <p class="section-subtitle">Each app solves one problem — and does it well.</p>
+        <h2 class="section-title">Ecosystems & Utility</h2>
+        <p class="section-subtitle">Systems designed to structure and scale distinct identities.</p>
       </div>
 
       <div class="apps-grid">
-        {apps.map((app, i) => (
+        {utilityApps.map((app, i) => (
+          <AppCard
+            name={app.name}
+            tagline={app.tagline}
+            platform={app.platform}
+            icon={app.icon}
+            slug={app.slug}
+            features={app.features}
+            category={app.category}
+            downloadUrl={app.downloadUrl}
+            index={i}
+          />
+        ))}
+      </div>
+    </section>
+
+    <section class="apps-section" style="padding-top: 0;">
+      <div class="section-header">
+        <h2 class="section-title">Creative & Experiences</h2>
+        <p class="section-subtitle">Built for the joy of use—interactive, beautiful, and standalone.</p>
+      </div>
+
+      <div class="apps-grid">
+        {creativeApps.map((app, i) => (
           <AppCard
             name={app.name}
             tagline={app.tagline}

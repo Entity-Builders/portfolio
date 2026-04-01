@@ -5,43 +5,104 @@ import Footer from '../components/Footer.astro';
 
 <Layout title="Meet the Builder — Juan Manuel Obrach">
   <main class="maker-page">
-    <section class="maker-hero">
-      <div class="maker-avatar">
-        <div class="avatar-circle">JO</div>
-      </div>
-      <h1 class="maker-title">Hi, I'm Juan Manuel Obrach.</h1>
-      <p class="maker-subtitle">The architect behind Entity Builders.</p>
-    </section>
+    
+    <div class="bento-container animate-fade-in">
+      
+      <!-- HERO BENTO -->
+      <section class="bento-card bento-hero">
+        <div class="maker-avatar">
+          <div class="avatar-circle">
+            <span>JO</span>
+            <div class="avatar-glow"></div>
+          </div>
+        </div>
+        <div class="hero-info">
+          <h1 class="maker-title">Hi, I'm Juan Manuel Obrach.</h1>
+          <p class="maker-subtitle">Solo-founder & Vibe Coder.</p>
+        </div>
+      </section>
 
-    <section class="maker-content">
-      <div class="content-block">
+      <!-- JOURNEY BENTO -->
+      <section class="bento-card bento-journey animate-delay-1">
         <h2>The Vibe Coding Journey</h2>
-        <p>
-          I started Entity Builders with a simple philosophy: build fast, validate quickly, and create tools that solve real problems. As a solo-preneur, I believe in "Vibe Coding"—prioritizing momentum and code reuse to create an interconnected universe of micro-SaaS products.
-        </p>
-        <p>
-          Every app in the Entity Builders ecosystem shares the same core logic and infrastructure, allowing me to ship faster and maintain high quality across the board.
-        </p>
-      </div>
+        <div class="card-body">
+          <p>
+            I build things. Fast. No 5-year roadmap, no Zoom meetings with a giant team. I practice "Vibe Coding": I recycle logic in my monorepo, iterate with real feedback, and build apps that I actually enjoy using.
+          </p>
+          <p>
+            Every app in this universe shares the same backbone: <code>eb-packages</code>. I write once, sell everywhere. This allows me to ship independently, maintain momentum, and keep things delightfully simple.
+          </p>
+        </div>
+      </section>
 
-      <div class="content-block">
+      <!-- STACK BENTO -->
+      <section class="bento-card bento-stack animate-delay-2">
         <h2>The Solo-Stack</h2>
         <ul class="tech-stack">
-          <li><strong>Frontend:</strong> React Native (Expo) & Astro</li>
-          <li><strong>Backend:</strong> Supabase (Auth, Postgres, Realtime)</li>
-          <li><strong>Payments:</strong> Stripe</li>
-          <li><strong>AI:</strong> Gemini & LangChain</li>
+          <li>
+            <span class="stack-icon">⚛️</span>
+            <div>
+              <strong>Frontend</strong>
+              <span>React Native (Expo) & Astro</span>
+            </div>
+          </li>
+          <li>
+            <span class="stack-icon">⚡</span>
+            <div>
+              <strong>Backend</strong>
+              <span>Supabase (Auth, Postgres, Realtime)</span>
+            </div>
+          </li>
+          <li>
+            <span class="stack-icon">💳</span>
+            <div>
+              <strong>Payments</strong>
+              <span>Stripe</span>
+            </div>
+          </li>
+          <li>
+            <span class="stack-icon">🧠</span>
+            <div>
+              <strong>AI</strong>
+              <span>Gemini & LangChain</span>
+            </div>
+          </li>
         </ul>
-      </div>
+      </section>
 
-      <div class="content-block">
+      <!-- CONNECT BENTO -->
+      <section class="bento-card bento-connect animate-delay-3">
         <h2>Let's Connect</h2>
         <p>I'm always open to chat about tech, micro-SaaS, or new ideas.</p>
         <div class="social-links">
-          <a href="https://github.com/juanobrach" target="_blank" rel="noopener noreferrer" class="btn">GitHub</a>
+          <a href="https://github.com/juanobrach" target="_blank" rel="noopener noreferrer" class="btn">
+            <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="https://twitter.com/juan_obrach" target="_blank" rel="noopener noreferrer" class="btn">
+            <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            Twitter
+          </a>
+          <a href="https://linkedin.com/in/jmobrach" target="_blank" rel="noopener noreferrer" class="btn">
+            <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            LinkedIn
+          </a>
+          <a href="mailto:juanobrach@gmail.com" class="btn">
+            <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            Email
+          </a>
         </div>
-      </div>
-    </section>
+      </section>
+
+    </div>
 
     <Footer />
   </main>
@@ -49,106 +110,302 @@ import Footer from '../components/Footer.astro';
 
 <style>
   .maker-page {
-    padding-top: 4rem;
+    padding-top: 7rem;
+    padding-bottom: 4rem;
   }
   
-  .maker-hero {
-    text-align: center;
-    padding: 2rem 2rem 4rem;
-    max-width: 600px;
+  .bento-container {
+    max-width: 1100px;
     margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(120px, auto);
+    gap: 1.5rem;
+  }
+
+  .bento-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 
+      inset 0 1px 1px rgba(255, 255, 255, 0.04),
+      var(--shadow-card);
+    transition: all var(--transition);
+  }
+
+  .bento-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-card-hover);
+    box-shadow: 
+      inset 0 1px 1px rgba(255, 255, 255, 0.08),
+      var(--shadow-card-hover);
+    background: var(--bg-card-hover);
+  }
+
+  .bento-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-hero);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .bento-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Sweep & Scale Placements */
+  .bento-hero {
+    grid-column: span 12;
+    flex-direction: row;
+    align-items: center;
+    gap: 4rem;
+    /* Soft teal reflection base */
+    background: linear-gradient(160deg, rgba(20, 184, 166, 0.08), rgba(16, 22, 26, 0.4));
+  }
+
+  .bento-journey {
+    grid-column: span 7;
+  }
+
+  .bento-stack {
+    grid-column: span 5;
+    grid-row: span 2;
+  }
+
+  .bento-connect {
+    grid-column: span 7;
+    justify-content: center;
+  }
+
+  /* Editorial Avatar */
+  .maker-avatar {
+    position: relative;
+    flex-shrink: 0;
   }
 
   .avatar-circle {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-    background: var(--gradient-hero, linear-gradient(135deg, #6366f1, #a855f7));
-    color: white;
+    background: var(--bg-primary);
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 800;
-    margin: 0 auto 1.5rem;
-    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 2px 20px rgba(0,0,0,0.5);
+  }
+
+  .avatar-glow {
+    position: absolute;
+    inset: -15px;
+    border-radius: 50%;
+    background: var(--gradient-hero);
+    z-index: 1;
+    filter: blur(25px);
+    opacity: 0.4;
+    animation: breathe 5s infinite alternate ease-in-out;
+  }
+
+  @keyframes breathe {
+    0% { transform: scale(0.95); opacity: 0.3; }
+    100% { transform: scale(1.05); opacity: 0.6; }
   }
 
   .maker-title {
-    font-size: 2.5rem;
+    font-size: 3.25rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
   }
 
   .maker-subtitle {
-    font-size: 1.25rem;
-    color: var(--text-secondary);
+    font-size: 1.4rem;
+    color: var(--accent-teal);
+    letter-spacing: -0.02em;
+    font-weight: 500;
   }
 
-  .maker-content {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 2rem 4rem;
-  }
-
-  .content-block {
-    margin-bottom: 3rem;
-  }
-
-  .content-block h2 {
+  .bento-card h2 {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid var(--border-subtle);
-    padding-bottom: 0.5rem;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
   }
 
-  .content-block p {
+  .card-body p {
     font-size: 1.1rem;
     color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
   }
 
+  .card-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Elegant List Styles */
   .tech-stack {
     list-style: none;
-    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1.25rem;
+    flex: 1;
+    justify-content: center;
   }
 
   .tech-stack li {
-    background: var(--surface-2);
-    padding: 1rem;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
     border: 1px solid var(--border-subtle);
-    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.3s ease;
+  }
+
+  .tech-stack li:hover {
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateX(4px);
+    border-color: rgba(20, 184, 166, 0.3);
+  }
+
+  .stack-icon {
+    font-size: 1.5rem;
+    background: rgba(0,0,0,0.3);
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
   }
 
   .tech-stack strong {
+    display: block;
     color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .tech-stack span:not(.stack-icon) {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* Connect Buttons */
+  .bento-connect p {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    margin-bottom: 2rem;
   }
 
   .social-links {
-    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
   .btn {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    background: var(--surface-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.03);
     color: var(--text-primary);
-    text-decoration: none;
     font-weight: 600;
-    border: 1px solid var(--border-subtle);
-    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all var(--transition);
   }
 
   .btn:hover {
-    background: var(--surface-3);
-    border-color: rgba(168, 85, 247, 0.5);
+    background: rgba(20, 184, 166, 0.1);
+    color: var(--accent-teal);
+    border-color: var(--accent-teal);
+    box-shadow: 0 4px 20px rgba(20, 184, 166, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .btn-icon {
+    opacity: 0.9;
+  }
+
+  /* Responsive Constraints */
+  @media (max-width: 900px) {
+    .bento-journey { grid-column: span 12; }
+    .bento-stack { grid-column: span 12; grid-row: auto; }
+    .bento-connect { grid-column: span 12; }
+  }
+
+  @media (max-width: 640px) {
+    .maker-page {
+      padding-top: 5rem;
+    }
+    
+    .bento-container {
+      padding: 0 1.25rem;
+      gap: 1.25rem;
+    }
+    
+    .bento-hero {
+      flex-direction: column;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      gap: 2rem;
+    }
+
+    .maker-title {
+      font-size: 2.25rem;
+    }
+
+    .avatar-circle {
+      width: 120px;
+      height: 120px;
+      font-size: 2.5rem;
+    }
+
+    .bento-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .social-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.875rem 0.5rem;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
   }
 </style>

@@ -14,71 +14,140 @@ export interface Props {
 const { name, tagline, platform, icon, slug, features, category, downloadUrl, index = 0 } = Astro.props;
 
 const categoryColors: Record<string, string> = {
-  'developer-tools': '#6366f1',
-  'finance': '#34d399',
-  'lifestyle': '#fbbf24',
+  'developer-tools': '#14B8A6', /* Teal */
+  'finance': '#10B981', /* Emerald */
+  'lifestyle': '#F59E0B', /* Amber */
 };
 
-const accentColor = categoryColors[category] || '#6366f1';
+const accentColor = categoryColors[category] || '#14B8A6';
 ---
 
 <a href={`/apps/${slug}`} class={`card animate-fade-in animate-delay-${index + 1}`} style={`--accent: ${accentColor}`}>
-  <div class="card-header">
-    <span class="card-icon">{icon}</span>
-    <span class="card-platform">{platform}</span>
-  </div>
+  <div class="card-border"></div>
+  <div class="card-content">
+    <div class="card-header">
+      <span class="card-icon">{icon}</span>
+      <span class="card-platform">{platform}</span>
+    </div>
 
-  <h3 class="card-title">{name}</h3>
-  <p class="card-tagline">{tagline}</p>
+    <h3 class="card-title">{name}</h3>
+    <p class="card-tagline">{tagline}</p>
 
-  <ul class="card-features">
-    {features.slice(0, 3).map((f) => (
-      <li>{f}</li>
-    ))}
-  </ul>
+    <ul class="card-features">
+      {features.slice(0, 3).map((f) => (
+        <li>{f}</li>
+      ))}
+    </ul>
 
-  <div class="card-footer">
-    <span class="card-cta">Learn more →</span>
+    <div class="card-footer">
+      <span class="card-cta">Learn more →</span>
+    </div>
   </div>
 </a>
+
+<script>
+  // Add interactive mouse tracking to cards
+  const cards = document.querySelectorAll('.card');
+  cards.forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+      (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+</script>
 
 <style>
   .card {
     display: flex;
     flex-direction: column;
-    padding: 1.75rem;
     background: var(--bg-card);
-    border: 1px solid var(--border-card);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    transition: all var(--transition);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04), var(--shadow-card);
     cursor: pointer;
     position: relative;
-    overflow: hidden;
     opacity: 0;
+    text-decoration: none;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: transform var(--transition);
   }
 
+  /* The interactive glow inside the card */
   .card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    bottom: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(255, 255, 255, 0.04),
+      transparent 40%
+    );
     opacity: 0;
-    transition: opacity var(--transition);
+    transition: opacity 0.5s;
+    z-index: 1;
+    pointer-events: none;
   }
 
-  .card:hover {
-    background: var(--bg-card-hover);
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: var(--shadow-card-hover);
-    transform: translateY(-4px);
+  /* The interactive border glow */
+  .card-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--border-card);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  .card:hover::before {
+  .card-border::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+      400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--accent),
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .card:hover::before,
+  .card:hover .card-border::before {
     opacity: 1;
+  }
+
+  .card-content {
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: inherit;
+    background: rgba(10, 15, 18, 0.4); /* Inner background to preserve blur deeply */
+    transition: background var(--transition), transform var(--transition);
+  }
+
+  .card:hover .card-content {
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
   }
 
   .card-header {
@@ -91,6 +160,7 @@ const accentColor = categoryColors[category] || '#6366f1';
   .card-icon {
     font-size: 2.25rem;
     line-height: 1;
+    filter: drop-shadow(0 4px 12px rgba(255,255,255,0.1));
   }
 
   .card-platform {
