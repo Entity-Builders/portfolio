@@ -1,4 +1,6 @@
 ---
+import ChatWidget from '../components/ChatWidget.astro';
+
 export interface Props {
   title: string;
   description?: string;
@@ -47,6 +49,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
   </head>
   <body>
     <slot />
+    <ChatWidget />
   </body>
 </html>
 
