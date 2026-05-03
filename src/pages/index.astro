@@ -108,6 +108,26 @@ import Footer from '../components/Footer.astro';
     max-width: 1080px;
     margin: 0 auto;
     padding: 0 2rem 3rem;
+    position: relative;
+  }
+
+  .experience-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 60px;
+    background: linear-gradient(to right, transparent, var(--bg-primary, #0a0f14));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .experience-bar::after {
+      opacity: 1;
+    }
   }
 
   .exp-track {
