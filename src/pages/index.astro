@@ -1,204 +1,95 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import AppCard from '../components/AppCard.astro';
 import Footer from '../components/Footer.astro';
-import matter from 'gray-matter';
-import fs from 'node:fs';
-import path from 'node:path';
-
-// Read all app READMEs from the monorepo apps folders
-const appsDir = path.resolve(process.cwd(), '../../apps');
-const appFolders = fs.readdirSync(appsDir).filter((f: string) => fs.statSync(path.join(appsDir, f)).isDirectory());
-
-interface AppData {
-  name: string;
-  tagline: string;
-  platform: string;
-  status: string;
-  category: string;
-  icon: string;
-  features: string[];
-  downloadUrl: string;
-  visible: boolean;
-  slug: string;
-}
-
-const apps: AppData[] = appFolders
-  .map((folder: string) => {
-    const readmePath = path.join(appsDir, folder, 'README.md');
-    if (!fs.existsSync(readmePath)) return null;
-    try {
-      const raw = fs.readFileSync(readmePath, 'utf-8');
-      const { data } = matter(raw);
-      if (!data || !data.name) return null;
-      return {
-        ...data,
-        slug: folder,
-      } as AppData;
-    } catch (e) {
-      return null;
-    }
-  })
-  .filter((app): app is AppData => app !== null && app.visible && app.status === 'active');
-
-// Categorize apps
-const mobileApps = apps.filter(app => app.platform?.includes('iOS') || app.platform?.includes('Android'));
-const webApps = apps.filter(app => app.platform?.includes('Web') || app.platform?.includes('macOS') || app.platform?.includes('API'));
 ---
 
 <Layout title="Juan Obrach — Senior Software Engineer" description="Senior Software Engineer with 10+ years building scalable apps. React Native, Node.js, Supabase, AWS. Explore my Micro-SaaS portfolio.">
   <main>
     <Hero />
 
-    <!-- Experience Summary -->
-    <section class="experience-section">
-      <div class="section-header">
-        <h2 class="section-title">Where I've Built</h2>
-        <p class="section-subtitle">Enterprise-grade products at scale, and independent projects from zero to launch.</p>
-      </div>
-
-      <div class="experience-grid">
-        <div class="exp-card">
-          <div class="exp-icon">🍔</div>
-          <div class="exp-info">
-            <h3>Restaurant Brands International</h3>
-            <span class="exp-role">Senior Software Engineer</span>
-            <p>Frontend architecture, TypeScript Strict Mode migration, campaign framework, and data pipelines with Snowflake & Amplitude for the Burger King mobile app.</p>
+    <!-- Compact Experience Bar -->
+    <section class="experience-bar">
+      <div class="exp-track">
+        <a href="https://www.rbi.com" target="_blank" rel="noopener noreferrer" class="exp-chip">
+          <span class="exp-emoji">🍔</span>
+          <div>
+            <strong>Restaurant Brands Intl.</strong>
+            <span>Senior SWE · 2022–Present</span>
+          </div>
+        </a>
+        <a href="https://blockfi.com" target="_blank" rel="noopener noreferrer" class="exp-chip">
+          <span class="exp-emoji">₿</span>
+          <div>
+            <strong>BlockFi</strong>
+            <span>Frontend Dev · 2021–2022</span>
+          </div>
+        </a>
+        <div class="exp-chip">
+          <span class="exp-emoji">💬</span>
+          <div>
+            <strong>Yelly App</strong>
+            <span>React Native · 2020–2021</span>
           </div>
         </div>
-
-        <div class="exp-card">
-          <div class="exp-icon">₿</div>
-          <div class="exp-info">
-            <h3>BlockFi</h3>
-            <span class="exp-role">Frontend Developer</span>
-            <p>Mission-critical crypto trading screens. High-trust UX/UI with modular, debuggable React components in a security-sensitive environment.</p>
-          </div>
-        </div>
-
-        <div class="exp-card">
-          <div class="exp-icon">💬</div>
-          <div class="exp-info">
-            <h3>Yelly App</h3>
-            <span class="exp-role">React Native Developer</span>
-            <p>Real-time chat with Sendbird, AWS Serverless, Algolia search, and GraphQL (Prisma) for native iOS and Android apps.</p>
-          </div>
-        </div>
-
-        <div class="exp-card">
-          <div class="exp-icon">🏢</div>
-          <div class="exp-info">
-            <h3>MRM / McCann</h3>
-            <span class="exp-role">Full Stack Developer</span>
-            <p>Internal tools for marketing automation and brand management for Cisco and General Motors.</p>
+        <div class="exp-chip">
+          <span class="exp-emoji">🏢</span>
+          <div>
+            <strong>MRM / McCann</strong>
+            <span>Full Stack · 2017–2020</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Mobile & Native Apps -->
-    {mobileApps.length > 0 && (
-      <section class="apps-section">
-        <div class="section-header">
-          <h2 class="section-title">Mobile & Native Apps</h2>
-          <p class="section-subtitle">Real products built with React Native, Expo, and Supabase — shipped to real users.</p>
-        </div>
+    <!-- Featured Projects — only the best 3 -->
+    <section class="featured">
+      <h2 class="featured-title">Featured Projects</h2>
+      <p class="featured-sub">Independent Micro-SaaS products built from my modular TypeScript monorepo.</p>
 
-        <div class="apps-grid">
-          {mobileApps.map((app, i) => (
-            <AppCard
-              name={app.name}
-              tagline={app.tagline}
-              platform={app.platform}
-              icon={app.icon}
-              slug={app.slug}
-              features={app.features}
-              category={app.category}
-              downloadUrl={app.downloadUrl}
-              index={i}
-            />
-          ))}
-        </div>
-      </section>
-    )}
+      <div class="projects-grid">
 
-    <!-- Web & Desktop Apps -->
-    {webApps.length > 0 && (
-      <section class="apps-section" style="padding-top: 0;">
-        <div class="section-header">
-          <h2 class="section-title">Web & Desktop Tools</h2>
-          <p class="section-subtitle">Developer tools, AI integrations, and creative web experiences.</p>
-        </div>
+        <a href="/apps/PostalPeek" class="project-card project-highlight">
+          <div class="project-badge">📮 iOS / Android</div>
+          <h3>PostalPeek</h3>
+          <p>Collect postcards through real-world walking. Gacha mechanics, albums, and a 3D globe to explore Street View worldwide.</p>
+          <div class="project-stack">
+            <span>React Native</span>
+            <span>Expo</span>
+            <span>Supabase</span>
+            <span>Google Maps</span>
+          </div>
+          <span class="project-link">Learn more →</span>
+        </a>
 
-        <div class="apps-grid">
-          {webApps.map((app, i) => (
-            <AppCard
-              name={app.name}
-              tagline={app.tagline}
-              platform={app.platform}
-              icon={app.icon}
-              slug={app.slug}
-              features={app.features}
-              category={app.category}
-              downloadUrl={app.downloadUrl}
-              index={i}
-            />
-          ))}
-        </div>
-      </section>
-    )}
+        <a href="/apps/potlink-mobile" class="project-card">
+          <div class="project-badge">🌱 iOS / Android</div>
+          <h3>Potlink</h3>
+          <p>AI Plant Doctor — snap a photo, get an instant diagnosis with species identification and care routines.</p>
+          <div class="project-stack">
+            <span>React Native</span>
+            <span>Gemini Vision</span>
+            <span>Supabase</span>
+          </div>
+          <span class="project-link">Learn more →</span>
+        </a>
 
-    <!-- Tech Stack -->
-    <section class="stack-section">
-      <div class="section-header">
-        <h2 class="section-title">Tech Stack</h2>
-        <p class="section-subtitle">The tools I reach for every day.</p>
+        <a href="/apps/tellee" class="project-card">
+          <div class="project-badge">🎙️ Web</div>
+          <h3>Tellee</h3>
+          <p>AI Podcaster — generates audio briefings from any topic. Built with edge functions and real-time AI audio generation.</p>
+          <div class="project-stack">
+            <span>Next.js</span>
+            <span>Supabase</span>
+            <span>AI Audio</span>
+          </div>
+          <span class="project-link">Learn more →</span>
+        </a>
+
       </div>
 
-      <div class="stack-grid">
-        <div class="stack-group">
-          <h3>Frontend & Mobile</h3>
-          <div class="stack-tags">
-            <span class="tag">React Native</span>
-            <span class="tag">Expo</span>
-            <span class="tag">React</span>
-            <span class="tag">Next.js</span>
-            <span class="tag">TypeScript</span>
-            <span class="tag">Astro</span>
-          </div>
-        </div>
-        <div class="stack-group">
-          <h3>Backend & Cloud</h3>
-          <div class="stack-tags">
-            <span class="tag">Node.js</span>
-            <span class="tag">Supabase</span>
-            <span class="tag">AWS</span>
-            <span class="tag">GraphQL</span>
-            <span class="tag">REST</span>
-            <span class="tag">Docker</span>
-          </div>
-        </div>
-        <div class="stack-group">
-          <h3>Data & Analytics</h3>
-          <div class="stack-tags">
-            <span class="tag">Snowflake</span>
-            <span class="tag">Amplitude</span>
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">Firebase</span>
-            <span class="tag">LaunchDarkly</span>
-          </div>
-        </div>
-        <div class="stack-group">
-          <h3>AI & Tools</h3>
-          <div class="stack-tags">
-            <span class="tag">Gemini</span>
-            <span class="tag">CI/CD</span>
-            <span class="tag">Git</span>
-            <span class="tag">Monorepos</span>
-            <span class="tag">Electron</span>
-          </div>
-        </div>
+      <div class="more-projects">
+        <a href="/about" class="more-link">See all projects & about me →</a>
       </div>
     </section>
 
@@ -212,179 +103,217 @@ const webApps = apps.filter(app => app.platform?.includes('Web') || app.platform
     z-index: 1;
   }
 
-  /* Experience Section */
-  .experience-section {
+  /* ── Experience Bar ── */
+  .experience-bar {
     max-width: 1080px;
     margin: 0 auto;
-    padding: 2rem 2rem 4rem;
+    padding: 0 2rem 3rem;
   }
 
-  .experience-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-  }
-
-  .exp-card {
+  .exp-track {
     display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 0.5rem;
+  }
+
+  .exp-track::-webkit-scrollbar { display: none; }
+
+  .exp-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 100px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition);
+  }
+
+  .exp-chip:hover {
+    border-color: var(--border-card-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .exp-emoji {
+    font-size: 1.25rem;
+  }
+
+  .exp-chip strong {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .exp-chip span:not(.exp-emoji) {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  /* ── Featured Projects ── */
+  .featured {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 2rem 2rem 3rem;
+    text-align: center;
+  }
+
+  .featured-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.4rem;
+  }
+
+  .featured-sub {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
-    padding: 1.75rem;
+    text-align: left;
+  }
+
+  .project-card {
+    padding: 2rem;
     background: var(--bg-card);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-lg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
     transition: all var(--transition);
     box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04), var(--shadow-card);
+    position: relative;
+    overflow: hidden;
   }
 
-  .exp-card:hover {
-    transform: translateY(-3px);
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-hero);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
     border-color: var(--border-card-hover);
     box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), var(--shadow-card-hover);
   }
 
-  .exp-icon {
-    font-size: 1.75rem;
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-subtle);
+  .project-card:hover::before {
+    opacity: 1;
   }
 
-  .exp-info h3 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 0.15rem;
-    letter-spacing: -0.01em;
+  /* First card spans full width */
+  .project-highlight {
+    grid-column: span 2;
+    background: linear-gradient(160deg, rgba(20, 184, 166, 0.06), rgba(16, 22, 26, 0.4));
   }
 
-  .exp-role {
-    font-size: 0.8rem;
-    color: var(--accent-teal);
+  .project-badge {
+    font-size: 0.7rem;
     font-weight: 600;
-    display: block;
-    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
   }
 
-  .exp-info p {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  /* Apps Section */
-  .apps-section {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 2rem 2rem 4rem;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-
-  .section-title {
-    font-size: 1.75rem;
+  .project-card h3 {
+    font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
   }
 
-  .section-subtitle {
-    font-size: 1rem;
+  .project-card p {
+    font-size: 0.95rem;
     color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1;
   }
 
-  .apps-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-  }
-
-  /* Stack Section */
-  .stack-section {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 2rem 2rem 4rem;
-  }
-
-  .stack-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-  }
-
-  .stack-group {
-    padding: 1.75rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border-card);
-    border-radius: var(--radius-lg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04), var(--shadow-card);
-  }
-
-  .stack-group h3 {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--accent-teal);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 1rem;
-  }
-
-  .stack-tags {
+  .project-stack {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
-  .tag {
-    font-size: 0.8rem;
+  .project-stack span {
+    font-size: 0.7rem;
     font-weight: 500;
-    padding: 0.35rem 0.75rem;
+    padding: 0.25rem 0.6rem;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid var(--border-subtle);
     border-radius: 100px;
-    color: var(--text-secondary);
-    transition: all 0.3s ease;
+    color: var(--text-muted);
   }
 
-  .tag:hover {
-    background: rgba(20, 184, 166, 0.1);
-    border-color: rgba(20, 184, 166, 0.3);
+  .project-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-teal);
+    margin-top: 0.25rem;
+  }
+
+  .more-projects {
+    margin-top: 2rem;
+  }
+
+  .more-link {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .more-link:hover {
     color: var(--accent-teal);
   }
 
+  /* ── Responsive ── */
   @media (max-width: 768px) {
-    .experience-grid {
+    .projects-grid {
       grid-template-columns: 1fr;
     }
 
-    .stack-grid {
-      grid-template-columns: 1fr;
+    .project-highlight {
+      grid-column: span 1;
     }
   }
 
   @media (max-width: 640px) {
-    .apps-section {
-      padding: 1.5rem 1rem 3rem;
+    .experience-bar {
+      padding: 0 1rem 2rem;
     }
 
-    .apps-grid {
-      grid-template-columns: 1fr;
+    .featured {
+      padding: 1.5rem 1.25rem 2rem;
     }
 
-    .exp-card {
-      flex-direction: column;
-      gap: 0.75rem;
+    .project-card {
+      padding: 1.5rem;
     }
   }
 </style>
