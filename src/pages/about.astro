@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="Meet the Builder — Juan Manuel Obrach">
-  <main class="maker-page">
+<Layout title="About — Juan Manuel Obrach" description="Learn about my journey from junior developer to Senior Software Engineer at Restaurant Brands International, building apps used by millions.">
+  <main class="about-page">
     
     <div class="bento-container animate-fade-in">
       
@@ -17,54 +17,54 @@ import Footer from '../components/Footer.astro';
           </div>
         </div>
         <div class="hero-info">
-          <h1 class="maker-title">Hi, I'm Juan Manuel Obrach.</h1>
-          <p class="maker-subtitle">Solo-founder & Vibe Coder.</p>
+          <h1 class="maker-title">Hi, I'm Juan.</h1>
+          <p class="maker-subtitle">Senior Software Engineer & Independent Creator</p>
         </div>
       </section>
 
       <!-- JOURNEY BENTO -->
       <section class="bento-card bento-journey animate-delay-1">
-        <h2>The Vibe Coding Journey</h2>
+        <h2>The Journey</h2>
         <div class="card-body">
           <p>
-            I build things. Fast. No 5-year roadmap, no Zoom meetings with a giant team. I practice "Vibe Coding": I recycle logic in my monorepo, iterate with real feedback, and build apps that I actually enjoy using.
+            I've spent the last 10+ years building software — from marketing microsites in Mexico City to architecting the Burger King mobile app used across the USA, Europe, and Canada. Along the way, I've worked with crypto trading platforms, real-time chat apps, and AI-powered tools.
           </p>
           <p>
-            Every app in this universe shares the same backbone: <code>eb-packages</code>. I write once, sell everywhere. This allows me to ship independently, maintain momentum, and keep things delightfully simple.
+            Today, beyond my role at <strong>Restaurant Brands International</strong>, I independently build and launch Micro-SaaS products from my modular monorepo. Every app shares the same backbone, allowing me to ship fast, iterate with real feedback, and maintain momentum as a solo creator.
           </p>
         </div>
       </section>
 
       <!-- STACK BENTO -->
       <section class="bento-card bento-stack animate-delay-2">
-        <h2>The Solo-Stack</h2>
+        <h2>What I Work With</h2>
         <ul class="tech-stack">
           <li>
-            <span class="stack-icon">⚛️</span>
+            <span class="stack-icon">📱</span>
             <div>
-              <strong>Frontend</strong>
-              <span>React Native (Expo) & Astro</span>
+              <strong>Mobile</strong>
+              <span>React Native, Expo, iOS & Android</span>
             </div>
           </li>
           <li>
-            <span class="stack-icon">⚡</span>
+            <span class="stack-icon">⚙️</span>
             <div>
               <strong>Backend</strong>
-              <span>Supabase (Auth, Postgres, Realtime)</span>
+              <span>Node.js, Supabase, AWS, GraphQL</span>
             </div>
           </li>
           <li>
-            <span class="stack-icon">💳</span>
+            <span class="stack-icon">📊</span>
             <div>
-              <strong>Payments</strong>
-              <span>Stripe</span>
+              <strong>Data</strong>
+              <span>Snowflake, Amplitude, PostgreSQL</span>
             </div>
           </li>
           <li>
-            <span class="stack-icon">🧠</span>
+            <span class="stack-icon">🤖</span>
             <div>
               <strong>AI</strong>
-              <span>Gemini & LangChain</span>
+              <span>Gemini Vision, LLM Integrations</span>
             </div>
           </li>
         </ul>
@@ -73,7 +73,7 @@ import Footer from '../components/Footer.astro';
       <!-- CONNECT BENTO -->
       <section class="bento-card bento-connect animate-delay-3">
         <h2>Let's Connect</h2>
-        <p>I'm always open to chat about tech, micro-SaaS, or new ideas.</p>
+        <p>I'm open to new opportunities, collaborations, and conversations about tech.</p>
         <div class="social-links">
           <a href="https://github.com/juanobrach" target="_blank" rel="noopener noreferrer" class="btn">
             <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -85,7 +85,7 @@ import Footer from '../components/Footer.astro';
             <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
-            Twitter
+            X / Twitter
           </a>
           <a href="https://linkedin.com/in/jmobrach" target="_blank" rel="noopener noreferrer" class="btn">
             <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -109,7 +109,7 @@ import Footer from '../components/Footer.astro';
 </Layout>
 
 <style>
-  .maker-page {
+  .about-page {
     padding-top: 7rem;
     padding-bottom: 4rem;
   }
@@ -166,13 +166,12 @@ import Footer from '../components/Footer.astro';
     opacity: 1;
   }
 
-  /* Sweep & Scale Placements */
+  /* Bento Grid Placements */
   .bento-hero {
     grid-column: span 12;
     flex-direction: row;
     align-items: center;
     gap: 4rem;
-    /* Soft teal reflection base */
     background: linear-gradient(160deg, rgba(20, 184, 166, 0.08), rgba(16, 22, 26, 0.4));
   }
 
@@ -190,7 +189,7 @@ import Footer from '../components/Footer.astro';
     justify-content: center;
   }
 
-  /* Editorial Avatar */
+  /* Avatar */
   .maker-avatar {
     position: relative;
     flex-shrink: 0;
@@ -265,7 +264,7 @@ import Footer from '../components/Footer.astro';
     margin-bottom: 0;
   }
 
-  /* Elegant List Styles */
+  /* Stack List */
   .tech-stack {
     list-style: none;
     display: flex;
@@ -343,6 +342,7 @@ import Footer from '../components/Footer.astro';
     font-size: 0.95rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
     transition: all var(--transition);
+    text-decoration: none;
   }
 
   .btn:hover {
@@ -357,7 +357,7 @@ import Footer from '../components/Footer.astro';
     opacity: 0.9;
   }
 
-  /* Responsive Constraints */
+  /* Responsive */
   @media (max-width: 900px) {
     .bento-journey { grid-column: span 12; }
     .bento-stack { grid-column: span 12; grid-row: auto; }
@@ -365,7 +365,7 @@ import Footer from '../components/Footer.astro';
   }
 
   @media (max-width: 640px) {
-    .maker-page {
+    .about-page {
       padding-top: 5rem;
     }
     

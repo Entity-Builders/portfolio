@@ -42,60 +42,163 @@ const apps: AppData[] = appFolders
   })
   .filter((app): app is AppData => app !== null && app.visible && app.status === 'active');
 
-const utilityCategories = ['finance', 'b2b', 'developer-tools'];
-const creativeCategories = ['lifestyle', 'media'];
-
-const utilityApps = apps.filter(app => utilityCategories.includes(app.category));
-const creativeApps = apps.filter(app => creativeCategories.includes(app.category));
+// Categorize apps
+const mobileApps = apps.filter(app => app.platform?.includes('iOS') || app.platform?.includes('Android'));
+const webApps = apps.filter(app => app.platform?.includes('Web') || app.platform?.includes('macOS') || app.platform?.includes('API'));
 ---
 
-<Layout title="Entity Builders — Digital Operations Studio">
+<Layout title="Juan Obrach — Senior Software Engineer" description="Senior Software Engineer with 10+ years building scalable apps. React Native, Node.js, Supabase, AWS. Explore my Micro-SaaS portfolio.">
   <main>
     <Hero />
 
-    <section class="apps-section">
+    <!-- Experience Summary -->
+    <section class="experience-section">
       <div class="section-header">
-        <h2 class="section-title">Ecosystems & Utility</h2>
-        <p class="section-subtitle">Systems designed to structure and scale distinct identities.</p>
+        <h2 class="section-title">Where I've Built</h2>
+        <p class="section-subtitle">Enterprise-grade products at scale, and independent projects from zero to launch.</p>
       </div>
 
-      <div class="apps-grid">
-        {utilityApps.map((app, i) => (
-          <AppCard
-            name={app.name}
-            tagline={app.tagline}
-            platform={app.platform}
-            icon={app.icon}
-            slug={app.slug}
-            features={app.features}
-            category={app.category}
-            downloadUrl={app.downloadUrl}
-            index={i}
-          />
-        ))}
+      <div class="experience-grid">
+        <div class="exp-card">
+          <div class="exp-icon">🍔</div>
+          <div class="exp-info">
+            <h3>Restaurant Brands International</h3>
+            <span class="exp-role">Senior Software Engineer</span>
+            <p>Frontend architecture, TypeScript Strict Mode migration, campaign framework, and data pipelines with Snowflake & Amplitude for the Burger King mobile app.</p>
+          </div>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-icon">₿</div>
+          <div class="exp-info">
+            <h3>BlockFi</h3>
+            <span class="exp-role">Frontend Developer</span>
+            <p>Mission-critical crypto trading screens. High-trust UX/UI with modular, debuggable React components in a security-sensitive environment.</p>
+          </div>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-icon">💬</div>
+          <div class="exp-info">
+            <h3>Yelly App</h3>
+            <span class="exp-role">React Native Developer</span>
+            <p>Real-time chat with Sendbird, AWS Serverless, Algolia search, and GraphQL (Prisma) for native iOS and Android apps.</p>
+          </div>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-icon">🏢</div>
+          <div class="exp-info">
+            <h3>MRM / McCann</h3>
+            <span class="exp-role">Full Stack Developer</span>
+            <p>Internal tools for marketing automation and brand management for Cisco and General Motors.</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="apps-section" style="padding-top: 0;">
+    <!-- Mobile & Native Apps -->
+    {mobileApps.length > 0 && (
+      <section class="apps-section">
+        <div class="section-header">
+          <h2 class="section-title">Mobile & Native Apps</h2>
+          <p class="section-subtitle">Real products built with React Native, Expo, and Supabase — shipped to real users.</p>
+        </div>
+
+        <div class="apps-grid">
+          {mobileApps.map((app, i) => (
+            <AppCard
+              name={app.name}
+              tagline={app.tagline}
+              platform={app.platform}
+              icon={app.icon}
+              slug={app.slug}
+              features={app.features}
+              category={app.category}
+              downloadUrl={app.downloadUrl}
+              index={i}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Web & Desktop Apps -->
+    {webApps.length > 0 && (
+      <section class="apps-section" style="padding-top: 0;">
+        <div class="section-header">
+          <h2 class="section-title">Web & Desktop Tools</h2>
+          <p class="section-subtitle">Developer tools, AI integrations, and creative web experiences.</p>
+        </div>
+
+        <div class="apps-grid">
+          {webApps.map((app, i) => (
+            <AppCard
+              name={app.name}
+              tagline={app.tagline}
+              platform={app.platform}
+              icon={app.icon}
+              slug={app.slug}
+              features={app.features}
+              category={app.category}
+              downloadUrl={app.downloadUrl}
+              index={i}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Tech Stack -->
+    <section class="stack-section">
       <div class="section-header">
-        <h2 class="section-title">Creative & Experiences</h2>
-        <p class="section-subtitle">Built for the joy of use—interactive, beautiful, and standalone.</p>
+        <h2 class="section-title">Tech Stack</h2>
+        <p class="section-subtitle">The tools I reach for every day.</p>
       </div>
 
-      <div class="apps-grid">
-        {creativeApps.map((app, i) => (
-          <AppCard
-            name={app.name}
-            tagline={app.tagline}
-            platform={app.platform}
-            icon={app.icon}
-            slug={app.slug}
-            features={app.features}
-            category={app.category}
-            downloadUrl={app.downloadUrl}
-            index={i}
-          />
-        ))}
+      <div class="stack-grid">
+        <div class="stack-group">
+          <h3>Frontend & Mobile</h3>
+          <div class="stack-tags">
+            <span class="tag">React Native</span>
+            <span class="tag">Expo</span>
+            <span class="tag">React</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Astro</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3>Backend & Cloud</h3>
+          <div class="stack-tags">
+            <span class="tag">Node.js</span>
+            <span class="tag">Supabase</span>
+            <span class="tag">AWS</span>
+            <span class="tag">GraphQL</span>
+            <span class="tag">REST</span>
+            <span class="tag">Docker</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3>Data & Analytics</h3>
+          <div class="stack-tags">
+            <span class="tag">Snowflake</span>
+            <span class="tag">Amplitude</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">LaunchDarkly</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3>AI & Tools</h3>
+          <div class="stack-tags">
+            <span class="tag">Gemini</span>
+            <span class="tag">CI/CD</span>
+            <span class="tag">Git</span>
+            <span class="tag">Monorepos</span>
+            <span class="tag">Electron</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -109,6 +212,73 @@ const creativeApps = apps.filter(app => creativeCategories.includes(app.category
     z-index: 1;
   }
 
+  /* Experience Section */
+  .experience-section {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .exp-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all var(--transition);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04), var(--shadow-card);
+  }
+
+  .exp-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-card-hover);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), var(--shadow-card-hover);
+  }
+
+  .exp-icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .exp-info h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+    letter-spacing: -0.01em;
+  }
+
+  .exp-role {
+    font-size: 0.8rem;
+    color: var(--accent-teal);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .exp-info p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Apps Section */
   .apps-section {
     max-width: 1080px;
     margin: 0 auto;
@@ -138,6 +308,71 @@ const creativeApps = apps.filter(app => creativeCategories.includes(app.category
     gap: 1.5rem;
   }
 
+  /* Stack Section */
+  .stack-section {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .stack-group {
+    padding: 1.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04), var(--shadow-card);
+  }
+
+  .stack-group h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+
+  .stack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.35rem 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+  }
+
+  .tag:hover {
+    background: rgba(20, 184, 166, 0.1);
+    border-color: rgba(20, 184, 166, 0.3);
+    color: var(--accent-teal);
+  }
+
+  @media (max-width: 768px) {
+    .experience-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stack-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
   @media (max-width: 640px) {
     .apps-section {
       padding: 1.5rem 1rem 3rem;
@@ -146,25 +381,10 @@ const creativeApps = apps.filter(app => creativeCategories.includes(app.category
     .apps-grid {
       grid-template-columns: 1fr;
     }
-  }
 
-  .ethos-section {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 2rem 4rem;
-    text-align: center;
-  }
-
-  .ethos-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-  }
-
-  .ethos-text {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    .exp-card {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
   }
 </style>

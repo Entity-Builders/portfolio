@@ -5,13 +5,19 @@
 <footer class="footer">
   <div class="footer-inner">
     <p class="footer-brand">
-      <span class="footer-logo">⚡</span> Entity Builders
+      <span class="footer-logo">⚡</span> Juan Obrach
     </p>
     <p class="footer-copy">
-      &copy; {new Date().getFullYear()} Entity Builders. Built with craft.
+      &copy; {new Date().getFullYear()} Juan Manuel Obrach. Built with Astro.
     </p>
     <div class="footer-links">
-      <a href="/maker" class="footer-link">Meet the Builder</a>
+      <a href="/about" class="footer-link">About</a>
+      <span class="footer-sep">·</span>
+      <a href="https://linkedin.com/in/jmobrach" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+      <span class="footer-sep">·</span>
+      <a href="https://github.com/juanobrach" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+      <span class="footer-sep">·</span>
+      <a href="mailto:juanobrach@gmail.com" class="footer-link">Contact</a>
     </div>
   </div>
 </footer>
@@ -47,6 +53,15 @@
 
   .footer-links {
     margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .footer-sep {
+    color: var(--text-muted);
+    font-size: 0.75rem;
   }
 
   .footer-link {
@@ -57,6 +72,6 @@
   }
 
   .footer-link:hover {
-    color: var(--text-primary);
+    color: var(--accent-teal);
   }
 </style>
