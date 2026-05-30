@@ -1,0 +1,294 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Group tag counts for the sidebar
+const tagCounts: Record<string, number> = {};
+posts.forEach((post) => {
+  post.data.tags.forEach((tag) => {
+    tagCounts[tag] = (tagCounts[tag] ?? 0) + 1;
+  });
+});
+const topTags = Object.entries(tagCounts)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 12)
+  .map(([tag]) => tag);
+---
+
+<Layout
+  title="Writing — Juan Obrach"
+  description="Technical articles on React Native, Expo, monorepos, and building Micro-SaaS products from the trenches of solo development."
+>
+  <main>
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+      <a href="/" class="blog-nav-home">
+        <span>⚡</span> juanobrach.dev
+      </a>
+      <div class="hero-content animate-fade-in">
+        <div class="hero-eyebrow">Writing</div>
+        <h1 class="hero-title">
+          Engineering in the <span class="hero-accent">Open</span>
+        </h1>
+        <p class="hero-sub">
+          Raw technical breakdowns from building a universe of Micro-SaaS apps.
+          Bugs, architecture decisions, and the stuff nobody writes about.
+        </p>
+      </div>
+
+      <!-- Tag filter -->
+      {topTags.length > 0 && (
+        <div class="tag-filter animate-fade-in animate-delay-1">
+          {topTags.map((tag) => (
+            <span class="filter-chip">{tag}</span>
+          ))}
+        </div>
+      )}
+    </section>
+
+    <!-- Articles Grid -->
+    <section class="articles-section">
+      <div class="articles-list">
+        {posts.map((post, i) => {
+          const date = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric', month: 'short', day: 'numeric'
+          }).format(post.data.date);
+
+          return (
+            <a
+              href={`/blog/${post.slug}`}
+              class={`article-card animate-fade-in animate-delay-${Math.min(i + 1, 4)}`}
+            >
+              <div class="card-top">
+                <time class="card-date">{date}</time>
+                <div class="card-tags">
+                  {post.data.tags.slice(0, 3).map((tag) => (
+                    <span class="card-tag">{tag}</span>
+                  ))}
+                </div>
+              </div>
+              <h2 class="card-title">{post.data.title}</h2>
+              {post.data.description && (
+                <p class="card-desc">{post.data.description}</p>
+              )}
+              <span class="card-read">Read article →</span>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Layout>
+
+<style>
+  main {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Blog Hero ── */
+  .blog-hero {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 3rem;
+  }
+
+  .blog-nav-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-bottom: 3rem;
+    transition: color 0.2s ease;
+  }
+
+  .blog-nav-home:hover { color: var(--accent-teal); }
+
+  .hero-content {
+    margin-bottom: 2rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-teal);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .hero-accent {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 560px;
+  }
+
+  /* ── Tag filter ── */
+  .tag-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .filter-chip {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    cursor: default;
+  }
+
+  /* ── Articles Section ── */
+  .articles-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 1rem 2rem 4rem;
+  }
+
+  .articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* ── Article Card ── */
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .article-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-hero);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .article-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-card-hover);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .article-card:hover::before {
+    opacity: 1;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .card-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    justify-content: flex-end;
+  }
+
+  .card-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    background: rgba(20, 184, 166, 0.07);
+    border: 1px solid rgba(20, 184, 166, 0.15);
+    border-radius: 100px;
+    color: var(--accent-teal);
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    line-height: 1.35;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .card-read {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--accent-teal);
+    margin-top: 0.25rem;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .blog-hero,
+    .articles-section {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+
+    .article-card { padding: 1.5rem; }
+
+    .card-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .card-tags { justify-content: flex-start; }
+  }
+</style>

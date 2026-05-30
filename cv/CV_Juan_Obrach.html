@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juan Manuel Obrach — Senior Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --accent-dark: #1e40af;
+      --text-primary: #1a1a2e;
+      --text-secondary: #4a4a6a;
+      --text-muted: #6b7280;
+      --bg-header: #0f172a;
+      --bg-section: #f8fafc;
+      --border: #e2e8f0;
+      --tag-bg: #f1f5f9;
+      --tag-border: #cbd5e1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-primary);
+      line-height: 1.5;
+      font-size: 10.5pt;
+      max-width: 850px;
+      margin: 0 auto;
+      background: #fff;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--bg-header);
+      color: #fff;
+      padding: 32px 40px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 0%, rgba(37, 99, 235, 0.15) 100%);
+      pointer-events: none;
+    }
+
+    .header h1 {
+      font-size: 26pt;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 2px;
+    }
+
+    .header .subtitle {
+      font-size: 12pt;
+      font-weight: 400;
+      color: #93c5fd;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      font-size: 9pt;
+      color: #cbd5e1;
+    }
+
+    .contact-row a {
+      color: #93c5fd;
+      text-decoration: none;
+    }
+
+    .contact-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .contact-icon {
+      font-size: 11pt;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .content {
+      padding: 0 40px 32px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      margin-top: 24px;
+    }
+
+    .section-title {
+      font-size: 11pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 6px;
+      margin-bottom: 16px;
+    }
+
+    /* ── SUMMARY ── */
+    .summary {
+      font-size: 10.5pt;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      padding: 14px 18px;
+      background: var(--bg-section);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* ── EXPERIENCE ── */
+    .job {
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+    }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .job-title {
+      font-size: 11.5pt;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .job-company {
+      font-weight: 500;
+      color: var(--accent-dark);
+    }
+
+    .job-dates {
+      font-size: 9pt;
+      color: var(--text-muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .job ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .job li {
+      position: relative;
+      padding-left: 16px;
+      margin-bottom: 5px;
+      font-size: 10pt;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .job li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .job li strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .skills-section,
+    .skills-grid,
+    .skill-row {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .skill-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .skill-label {
+      font-size: 9pt;
+      font-weight: 600;
+      color: var(--text-primary);
+      min-width: 150px;
+      flex-shrink: 0;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5pt;
+      font-weight: 500;
+      padding: 2px 9px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      border-radius: 4px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    /* ── FOOTER SECTIONS ── */
+    .footer-section {
+      margin-top: 20px;
+    }
+
+    .lang-info, .ref-item {
+      font-size: 10pt;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .ref-item a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .ref-note {
+      font-size: 8.5pt;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body {
+        max-width: 100%;
+        font-size: 10pt;
+      }
+      .header {
+        padding: 24px 32px 22px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .content {
+        padding: 0 32px 24px;
+      }
+      .section {
+        margin-top: 18px;
+      }
+      .section-title {
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+      .job {
+        page-break-inside: avoid;
+      }
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 18px;
+      }
+      .skill-row {
+        display: block;
+      }
+      .skill-label {
+        min-width: 0;
+        margin-bottom: 5px;
+      }
+      .skills-section,
+      .skills-grid,
+      .footer-section {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+    }
+
+    @page {
+      margin: 0;
+      size: letter;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ HEADER ════ -->
+  <header class="header">
+    <h1>Juan Manuel Obrach</h1>
+    <div class="subtitle">Senior Software Engineer & Technical Architect</div>
+    <div class="contact-row">
+      <span><span class="contact-icon">📍</span> Buenos Aires, Argentina</span>
+      <span><span class="contact-icon">📧</span> juanobrach@gmail.com</span>
+      <span><span class="contact-icon">📱</span> +5491124099552</span>
+      <span><span class="contact-icon">🔗</span> <a href="https://www.linkedin.com/in/jmobrach/">linkedin.com/in/jmobrach</a></span>
+      <span><span class="contact-icon">🐙</span> <a href="https://github.com/juanobrach">github.com/juanobrach</a></span>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ════ SUMMARY ════ -->
+    <section class="section">
+      <h2 class="section-title">Professional Summary</h2>
+      <p class="summary">
+        Senior Software Engineer and Independent Creator with over 10 years of experience designing and building scalable applications, ranging from massive enterprise platforms to Micro-SaaS ecosystems. Specialized in React Native/Expo, Node.js/Supabase/AWS, and AI product engineering, including LLM-powered workflows, multimodal vision, structured data extraction, and automated content enrichment pipelines. Passionate about lean development, process automation (CI/CD), and modular systems that prioritize delivery speed and code reusability.
+      </p>
+    </section>
+
+    <!-- ════ EXPERIENCE ════ -->
+    <section class="section">
+      <h2 class="section-title">Professional Experience</h2>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Senior Software Engineer · <span class="job-company">Santex / RBI (Burger King)</span></div>
+          <div class="job-dates">Jan 2022 – Present</div>
+        </div>
+        <ul>
+          <li><strong>Frontend Architecture & Stabilization:</strong> Drove the frontend stabilization and performance optimization of the Burger King mobile application (React Native/Expo) for the USA, Europe, and Canada. Designed hybrid state management architectures separating ordering and restaurant states.</li>
+          <li><strong>Performance & Concurrency:</strong> Resolved critical race conditions in order confirmations and POS gift card transactions. Implemented deterministic network idle detection using Apollo link layers, preventing bridge dropouts during heavy JS thread operations.</li>
+          <li><strong>Massive Refactoring & Localization:</strong> Spearheaded TypeScript Strict Mode enablement across the massive Expo monorepo, resolving 1,000+ type errors. Engineered a custom localization library for enhanced translation control and analytics across the BK ecosystem.</li>
+          <li><strong>Backend & Cloud Migrations:</strong> Upgraded core backend microservices to Node 24, integrating CI/CD pipelines with CircleCI and Terraform. Debugged complex AWS infrastructure issues including DynamoDB GSI propagation.</li>
+          <li><strong>Event-Driven Systems:</strong> Engineered robust push notification pipelines and resolved critical regressions in order-tracking services for reliable POS metadata persistence.</li>
+          <li><strong>Campaign Framework:</strong> Architected a communication protocol between the native Expo app and campaign WebViews with message-based architectures, regex extraction, and defensive navigation guards.</li>
+          <li><strong>Data Pipelines & Analytics:</strong> Engineered data integrations connecting diverse sources within Snowflake, building pipelines to synchronize warehouse data with Amplitude for advanced user analytics.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Independent Developer & Technical Architect · <span class="job-company">Micro-SaaS Portfolio</span></div>
+          <div class="job-dates">2024 – Present</div>
+        </div>
+        <ul>
+          <li>Architected a modular Monorepo (Yarn Workspaces) to independently develop and launch multiple B2B/B2C Micro-SaaS applications, maximizing code reuse.</li>
+          <li>Designed a 3-layer database infrastructure using Supabase (Local Docker, Staging, Production Cloud Projects) with strict Row Level Security (RLS).</li>
+          <li><strong>AI Product Workflows:</strong> Built Gemini-powered diagnosis, visual metadata extraction, conversational assistants, structured LLM pipelines, and automated content enrichment flows across Entity Builders.</li>
+          <li><strong>PostalPeek:</strong> Interactive map-based mobile exploration game with complex UI animations (glassmorphism) and Google Maps integrations.</li>
+          <li><strong>Minimal Money:</strong> Native personal finance tracker (React Native/Expo) focused on high-performance UX and data synchronization.</li>
+          <li><strong>Potlink & Promptly:</strong> AI-powered plant diagnostic tool using Gemini Vision; desktop text-toolkit application built on Electron.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">React Native Developer · <span class="job-company">Yelly App</span></div>
+          <div class="job-dates">May 2021 – 2022</div>
+        </div>
+        <ul>
+          <li>Developed native applications for iOS and Android with React Native, including real-time chat using Sendbird.</li>
+          <li>Integrated with AWS Serverless Framework, Algolia search, and GraphQL server/client (Prisma).</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Frontend Developer · <span class="job-company">BlockFi / Phinxlab</span></div>
+          <div class="job-dates">Nov 2020 – May 2021</div>
+        </div>
+        <ul>
+          <li>Owned the development and reliability of mission-critical trading screens for the BlockFi cryptocurrency platform, where operational accuracy directly impacted financial transactions.</li>
+          <li>Collaborated with Design to deliver high-trust UX/UI for real-time crypto trading, building modular, debuggable React components in a security-sensitive environment.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Full Stack Developer · <span class="job-company">Independiente / Brandonfire</span></div>
+          <div class="job-dates">Jan 2019 – Nov 2020</div>
+        </div>
+        <ul>
+          <li>Extended the WordPress API for custom widgets and blocks using React and Web Components.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Full Stack Developer · <span class="job-company">MRM / McCann</span></div>
+          <div class="job-dates">Mar 2019 – Nov 2019</div>
+        </div>
+        <ul>
+          <li>Developed internal tools for marketing automation and management tools for brands including Cisco and GM (General Motors).</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Full Stack Developer · <span class="job-company">Promologistics · Sanki · Etomin</span></div>
+          <div class="job-dates">Mar 2017 – Jan 2019</div>
+        </div>
+        <ul>
+          <li>Developed microsites with Angular 6 and Headless CMS. Built a back office and e-commerce platform for the "Modelo" group with redeemable coupon systems.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Full Stack Developer · <span class="job-company">Web Design Playa</span></div>
+          <div class="job-dates">Apr 2016 – Mar 2017</div>
+        </div>
+        <ul>
+          <li>Automated client site launches using Docker and custom BASH tooling, reducing deployment time and costs.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Jr. Full Stack Developer · <span class="job-company">GM2DEV</span></div>
+          <div class="job-dates">Mar 2015 – Apr 2016</div>
+        </div>
+        <ul>
+          <li>Developed an iOS application for artistic works promotion, integrating CMS (WordPress) with Firebase real-time database.</li>
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- ════ SKILLS ════ -->
+    <section class="section skills-section">
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-row">
+          <div class="skill-label">AI & LLM Engineering</div>
+          <div class="skill-tags">
+            <span class="tag">Gemini API</span>
+            <span class="tag">OpenAI API</span>
+            <span class="tag">Prompt Engineering</span>
+            <span class="tag">Structured Outputs</span>
+            <span class="tag">Vision</span>
+            <span class="tag">AI Chat</span>
+            <span class="tag">Metadata Extraction</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label">Frontend & Mobile</div>
+          <div class="skill-tags">
+            <span class="tag">React Native</span>
+            <span class="tag">Expo</span>
+            <span class="tag">React.js</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Angular</span>
+            <span class="tag">Vue</span>
+            <span class="tag">Tailwind</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label">Backend & APIs</div>
+          <div class="skill-tags">
+            <span class="tag">Node.js</span>
+            <span class="tag">Express</span>
+            <span class="tag">GraphQL</span>
+            <span class="tag">REST</span>
+            <span class="tag">PHP</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label">Databases & Cloud</div>
+          <div class="skill-tags">
+            <span class="tag">Supabase</span>
+            <span class="tag">AWS</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Snowflake</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">MongoDB</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label">Analytics & Ops</div>
+          <div class="skill-tags">
+            <span class="tag">Amplitude</span>
+            <span class="tag">LaunchDarkly</span>
+            <span class="tag">Docker</span>
+            <span class="tag">CI/CD</span>
+            <span class="tag">Git</span>
+            <span class="tag">Monorepos</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ LANGUAGES ════ -->
+    <section class="section footer-section">
+      <h2 class="section-title">Languages & References</h2>
+      <p class="lang-info"><strong>Languages:</strong> Spanish (Native), English (Upper-Intermediate / Professional Working Proficiency)</p>
+      <br>
+      <p class="ref-item"><strong>Andy Weiss</strong> — Restaurant Brands International · <a href="https://www.linkedin.com/in/andyweiss/">linkedin.com/in/andyweiss</a></p>
+      <p class="ref-item"><strong>Juan Anibal Micheli</strong> — Yelly App · <a href="https://www.linkedin.com/in/anibalmicheli/">linkedin.com/in/anibalmicheli</a></p>
+      <p class="ref-note">Direct contact details available upon request.</p>
+    </section>
+
+  </div>
+
+</body>
+</html>

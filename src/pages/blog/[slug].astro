@@ -1,0 +1,72 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+type Props = { post: CollectionEntry<'blog'> };
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<BlogLayout
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  tags={post.data.tags}
+>
+  <Content />
+</BlogLayout>
+
+<!-- Mermaid diagrams — loaded client-side so Astro static build stays simple -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    themeVariables: {
+      fontFamily: 'Plus Jakarta Sans, sans-serif',
+      primaryColor: '#10161A',
+      primaryTextColor: '#F8FAFC',
+      primaryBorderColor: '#14B8A6',
+      lineColor: '#64748B',
+      secondaryColor: '#10161A',
+      tertiaryColor: '#0A0F12',
+      background: '#0A0F12',
+      mainBkg: '#10161A',
+      nodeBorder: 'rgba(20,184,166,0.3)',
+      clusterBkg: '#10161A',
+      titleColor: '#F8FAFC',
+      edgeLabelBackground: '#0A0F12',
+      attributeBackgroundColorEven: '#10161A',
+      attributeBackgroundColorOdd: '#0d1117',
+      actorBkg: '#10161A',
+      actorBorder: '#14B8A6',
+      actorTextColor: '#F8FAFC',
+      signalColor: '#94A3B8',
+      signalTextColor: '#F8FAFC',
+      noteBkgColor: '#172026',
+      noteTextColor: '#F8FAFC',
+      noteBorderColor: 'rgba(20,184,166,0.35)',
+    },
+    flowchart: { curve: 'basis', padding: 24 },
+    sequence: { actorMargin: 64, messageMargin: 44, mirrorActors: false },
+  });
+
+  document.querySelectorAll('pre[data-language="mermaid"]').forEach((pre) => {
+    const div = document.createElement('div');
+    div.className = 'mermaid';
+    div.textContent = pre.textContent?.trim() ?? '';
+    pre.replaceWith(div);
+  });
+
+  await mermaid.run({ querySelector: '.mermaid' });
+</script>

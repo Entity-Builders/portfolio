@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro preferences disable devToolbar && astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "cv:build": "node scripts/build-cv.mjs",
+    "social:drafts": "node scripts/generate-social-drafts.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
