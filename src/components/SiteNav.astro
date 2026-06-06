@@ -1,0 +1,141 @@
+---
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/case-studies', label: 'Case Studies' },
+  { href: '/blog', label: 'Writing' },
+  { href: '/about', label: 'About' },
+];
+
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+
+<header class="site-nav-shell">
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a href="/" class="site-brand" aria-label="Juan Obrach home">
+      <span class="brand-mark">JO</span>
+      <span class="brand-copy">Juan Obrach</span>
+    </a>
+
+    <div class="site-links">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class:list={['site-link', { active: isActive(link.href) }]}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-nav-shell {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0.85rem 1.5rem;
+    background: rgba(10, 15, 18, 0.78);
+    border-bottom: 1px solid var(--border-subtle);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .site-nav {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  .site-brand,
+  .site-links {
+    display: flex;
+    align-items: center;
+  }
+
+  .site-brand {
+    gap: 0.65rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 800;
+    min-width: 0;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20, 184, 166, 0.12);
+    border: 1px solid rgba(20, 184, 166, 0.24);
+    color: var(--accent-teal);
+    font-size: 0.75rem;
+    letter-spacing: 0;
+    flex-shrink: 0;
+  }
+
+  .brand-copy {
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .site-links {
+    gap: 0.25rem;
+    justify-content: flex-end;
+  }
+
+  .site-link {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.55rem 0.75rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: color 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .site-link:hover,
+  .site-link.active {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .site-link.active {
+    color: var(--accent-teal);
+  }
+
+  @media (max-width: 640px) {
+    .site-nav-shell {
+      padding: 0.75rem 1rem;
+    }
+
+    .site-nav {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .site-links {
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      justify-content: flex-start;
+      padding-bottom: 0.1rem;
+    }
+
+    .site-links::-webkit-scrollbar {
+      display: none;
+    }
+  }
+</style>

@@ -11,6 +11,10 @@
       &copy; {new Date().getFullYear()} Juan Manuel Obrach. Built with Astro.
     </p>
     <div class="footer-links">
+      <a href="/" class="footer-link">Home</a>
+      <span class="footer-sep">·</span>
+      <a href="/case-studies" class="footer-link">Case Studies</a>
+      <span class="footer-sep">·</span>
       <a href="/about" class="footer-link">About</a>
       <span class="footer-sep">·</span>
       <a href="/blog" class="footer-link">Writing</a>
@@ -56,6 +60,7 @@
   .footer-links {
     margin-top: 1rem;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
@@ -75,5 +80,15 @@
 
   .footer-link:hover {
     color: var(--accent-teal);
+  }
+
+  @media (max-width: 480px) {
+    .footer {
+      padding: 2rem 1.25rem 6rem;
+    }
+
+    .footer-links {
+      row-gap: 0.65rem;
+    }
   }
 </style>

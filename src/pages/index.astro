@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Footer from '../components/Footer.astro';
+import CaseStudyCard from '../components/CaseStudyCard.astro';
+import { featuredCaseStudies } from '../data/caseStudies';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const latestPosts = allPosts
@@ -10,7 +12,7 @@ const latestPosts = allPosts
   .slice(0, 3);
 ---
 
-<Layout title="Juan Obrach — Senior Software Engineer" description="Senior Software Engineer with 10+ years building scalable apps. React Native, Node.js, Supabase, AWS. Explore my Micro-SaaS portfolio.">
+<Layout title="Juan Obrach - Senior Product Engineer" description="Senior Product Engineer focused on mobile, AI, and end-to-end product execution. Built in scale-up teams and through independent product work.">
   <main>
     <Hero />
 
@@ -21,81 +23,46 @@ const latestPosts = allPosts
           <span class="exp-emoji">🍔</span>
           <div>
             <strong>Restaurant Brands Intl.</strong>
-            <span>Senior SWE · 2022–Present</span>
+            <span>Scale-up mobile · 2022-Present</span>
           </div>
         </a>
         <a href="https://blockfi.com" target="_blank" rel="noopener noreferrer" class="exp-chip">
           <span class="exp-emoji">₿</span>
           <div>
             <strong>BlockFi</strong>
-            <span>Frontend Dev · 2021–2022</span>
+            <span>Trading UX · 2021-2022</span>
           </div>
         </a>
         <div class="exp-chip">
           <span class="exp-emoji">💬</span>
           <div>
             <strong>Yelly App</strong>
-            <span>React Native · 2020–2021</span>
+            <span>React Native · 2020-2021</span>
           </div>
         </div>
         <div class="exp-chip">
           <span class="exp-emoji">🏢</span>
           <div>
             <strong>MRM / McCann</strong>
-            <span>Full Stack · 2017–2020</span>
+            <span>Full stack · 2017-2020</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Featured Projects — only the best 3 -->
+    <!-- Featured Case Studies -->
     <section class="featured">
-      <h2 class="featured-title">Featured Projects</h2>
-      <p class="featured-sub">Independent Micro-SaaS products built from my modular TypeScript monorepo.</p>
+      <h2 class="featured-title">Featured Case Studies</h2>
+      <p class="featured-sub">Evidence for technical leaders: product judgment, systems, tradeoffs, and shipped work.</p>
 
-      <div class="projects-grid">
-
-        <a href="/apps/PostalPeek" class="project-card project-highlight">
-          <div class="project-badge">📮 iOS / Android</div>
-          <h3>PostalPeek</h3>
-          <p>Collect postcards through real-world walking. Gacha mechanics, albums, and a 3D globe to explore Street View worldwide.</p>
-          <div class="project-stack">
-            <span>React Native</span>
-            <span>Expo</span>
-            <span>Supabase</span>
-            <span>Google Maps</span>
-          </div>
-          <span class="project-link">Learn more →</span>
-        </a>
-
-        <a href="/apps/potlink-mobile" class="project-card">
-          <div class="project-badge">🌱 iOS / Android</div>
-          <h3>Potlink</h3>
-          <p>AI Plant Doctor — snap a photo, get an instant diagnosis with species identification and care routines.</p>
-          <div class="project-stack">
-            <span>React Native</span>
-            <span>Gemini Vision</span>
-            <span>Supabase</span>
-          </div>
-          <span class="project-link">Learn more →</span>
-        </a>
-
-        <a href="/apps/tellee" class="project-card">
-          <div class="project-badge">🎙️ Web</div>
-          <h3>Tellee</h3>
-          <p>AI Podcaster — generates audio briefings from any topic. Built with edge functions and real-time AI audio generation.</p>
-          <div class="project-stack">
-            <span>Next.js</span>
-            <span>Supabase</span>
-            <span>AI Audio</span>
-          </div>
-          <span class="project-link">Learn more →</span>
-        </a>
-
+      <div class="case-grid-home">
+        {featuredCaseStudies.map((study, index) => (
+          <CaseStudyCard study={study} featured={index === 0} />
+        ))}
       </div>
 
       <div class="more-projects">
-        <a href="/about" class="more-link">See all projects & about me →</a>
+        <a href="/case-studies" class="more-link">View all case studies -></a>
       </div>
     </section>
 
@@ -104,7 +71,7 @@ const latestPosts = allPosts
       <div class="writing-header">
         <div>
           <h2 class="writing-title">Latest Writing</h2>
-          <p class="writing-sub">Engineering deep-dives from the trenches of building Micro-SaaS.</p>
+          <p class="writing-sub">Technical notes from building products, fixing systems, and working in the open.</p>
         </div>
         <a href="/blog" class="writing-all">All articles →</a>
       </div>
@@ -242,6 +209,17 @@ const latestPosts = allPosts
     margin-bottom: 2.5rem;
   }
 
+  .case-grid-home {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 1.25rem;
+    text-align: left;
+  }
+
+  .case-grid-home :global(.case-card:first-child) {
+    grid-row: span 2;
+  }
+
   .projects-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -356,6 +334,14 @@ const latestPosts = allPosts
 
   /* ── Responsive ── */
   @media (max-width: 768px) {
+    .case-grid-home {
+      grid-template-columns: 1fr;
+    }
+
+    .case-grid-home :global(.case-card:first-child) {
+      grid-row: span 1;
+    }
+
     .projects-grid {
       grid-template-columns: 1fr;
     }

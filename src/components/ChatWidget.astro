@@ -1,6 +1,17 @@
 ---
 // ChatWidget.astro — Floating AI chat bubble
 // Uses the portfolio-chat Supabase Edge Function
+const configuredSupabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || '';
+const configuredSupabaseAnonKey =
+  import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
+const isLocalSupabaseUrl = /^https?:\/\/(localhost|127\.0\.0\.1)(?::|\/|$)/.test(
+  configuredSupabaseUrl
+);
+const assistantSupabaseUrl =
+  import.meta.env.PROD && isLocalSupabaseUrl ? '' : configuredSupabaseUrl;
+const assistantSupabaseAnonKey = assistantSupabaseUrl
+  ? configuredSupabaseAnonKey
+  : '';
 ---
 
 <div id="chat-widget">
@@ -22,15 +33,15 @@
       <div class="chat-header-info">
         <div class="chat-avatar">JO</div>
         <div>
-          <strong>Juan's AI Assistant</strong>
-          <span class="chat-status">Powered by Gemini</span>
+          <strong>Product Engineering Assistant</strong>
+          <span class="chat-status">Juan's work, systems, and fit</span>
         </div>
       </div>
     </div>
 
     <div id="chat-messages" class="chat-messages">
       <div class="chat-msg assistant">
-        <p>Hey! 👋 I'm Juan's AI assistant. Ask me about his experience, projects, or tech stack.</p>
+        <p>Hey! Ask me about Juan's case studies, product engineering work, AI/mobile systems, or collaboration fit.</p>
       </div>
     </div>
 
@@ -38,7 +49,7 @@
       <input
         type="text"
         id="chat-input"
-        placeholder="Ask about Juan's experience..."
+        placeholder="Ask about case studies..."
         maxlength="500"
         autocomplete="off"
       />
@@ -286,9 +297,24 @@
   }
 </style>
 
-<script is:inline define:vars={{ supabaseUrl: import.meta.env.PUBLIC_SUPABASE_URL || 'http://localhost:54321' }}>
+<script
+  is:inline
+  define:vars={{
+    supabaseUrl: assistantSupabaseUrl,
+    supabaseAnonKey: assistantSupabaseAnonKey,
+  }}
+>
   (function() {
-    const EDGE_URL = supabaseUrl + '/functions/v1/portfolio-chat';
+    const EDGE_URL = supabaseUrl ? supabaseUrl + '/functions/v1/portfolio-chat' : '';
+    const EDGE_HEADERS = {
+      'Content-Type': 'application/json',
+      ...(supabaseAnonKey
+        ? {
+            Authorization: 'Bearer ' + supabaseAnonKey,
+            apikey: supabaseAnonKey,
+          }
+        : {}),
+    };
 
     const toggle = document.getElementById('chat-toggle');
     const chatWindow = document.getElementById('chat-window');
@@ -328,10 +354,19 @@
       // Show typing indicator
       const typingEl = addMessage('Thinking...', 'typing');
 
+      if (!EDGE_URL) {
+        typingEl.remove();
+        addMessage('Assistant is not configured yet. Try again later.', 'assistant');
+        isLoading = false;
+        sendBtn.disabled = false;
+        input.focus();
+        return;
+      }
+
       try {
         const res = await fetch(EDGE_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: EDGE_HEADERS,
           body: JSON.stringify({ history: history.slice(-10), message: text }),
         });
 

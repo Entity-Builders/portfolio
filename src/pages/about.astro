@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="About — Juan Manuel Obrach" description="Learn about my journey from junior developer to Senior Software Engineer at Restaurant Brands International, building apps used by millions.">
+<Layout title="About - Juan Manuel Obrach" description="Senior Product Engineer and independent creator building mobile, AI, and end-to-end product systems from scale-up teams to Entity Builders.">
   <main class="about-page">
     
     <div class="bento-container animate-fade-in">
@@ -18,7 +18,7 @@ import Footer from '../components/Footer.astro';
         </div>
         <div class="hero-info">
           <h1 class="maker-title">Hi, I'm Juan.</h1>
-          <p class="maker-subtitle">Senior Software Engineer & Independent Creator</p>
+          <p class="maker-subtitle">Senior Product Engineer & Independent Creator</p>
         </div>
       </section>
 
@@ -27,12 +27,35 @@ import Footer from '../components/Footer.astro';
         <h2>The Journey</h2>
         <div class="card-body">
           <p>
-            I've spent the last 10+ years building software — from marketing microsites in Mexico City to architecting the Burger King mobile app used across the USA, Europe, and Canada. Along the way, I've worked with crypto trading platforms, real-time chat apps, and AI-powered tools.
+            I've spent the last 10+ years building software across agencies, startups, crypto products, real-time mobile apps, and scale-up product teams. The throughline is simple: I like taking unclear product needs and turning them into systems that people can actually use.
           </p>
           <p>
-            Today, beyond my role at <strong>Restaurant Brands International</strong>, I independently build and launch Micro-SaaS products from my modular monorepo. Every app shares the same backbone, allowing me to ship fast, iterate with real feedback, and maintain momentum as a solo creator.
+            At <strong>Restaurant Brands International</strong>, that means working inside production mobile flows where reliability, regional complexity, and team execution matter. Through <strong>Entity Builders</strong>, it means shaping independent products from idea to architecture, UI, AI orchestration, backend, deployment, and iteration.
           </p>
         </div>
+      </section>
+
+      <!-- HOW I WORK BENTO -->
+      <section class="bento-card bento-how animate-delay-2">
+        <h2>How I Work</h2>
+        <ul class="principles-list">
+          <li>
+            <strong>Clarify ambiguity</strong>
+            <span>I like the early messy part: asking what the product is really trying to make easier, safer, faster, or more delightful.</span>
+          </li>
+          <li>
+            <strong>Ship useful slices</strong>
+            <span>I prefer small pieces that teach us something over large plans that only feel complete on paper.</span>
+          </li>
+          <li>
+            <strong>Design systems around product needs</strong>
+            <span>Architecture should protect the user journey and the business loop, not exist as decoration.</span>
+          </li>
+          <li>
+            <strong>Use AI as leverage</strong>
+            <span>AI is strongest when it compresses real work: parsing, feedback, memory, generation, or decision support.</span>
+          </li>
+        </ul>
       </section>
 
       <!-- STACK BENTO -->
@@ -64,16 +87,29 @@ import Footer from '../components/Footer.astro';
             <span class="stack-icon">🤖</span>
             <div>
               <strong>AI</strong>
-              <span>Gemini Vision, LLM Integrations</span>
+              <span>Gemini, LLM flows, agents, AI UX</span>
             </div>
           </li>
         </ul>
       </section>
 
+      <!-- CREATIVE PRACTICE BENTO -->
+      <section class="bento-card bento-creative animate-delay-3">
+        <h2>Creative Practice</h2>
+        <div class="card-body">
+          <p>
+            Outside software, I'm drawn to music, visual ideas, and small creative systems. That side of me shapes how I think about rhythm, taste, constraints, and the feeling a product leaves behind.
+          </p>
+          <p>
+            I do not see that as separate from engineering. It is part of why I care about product voice, interface feel, and whether a system has a point of view.
+          </p>
+        </div>
+      </section>
+
       <!-- CONNECT BENTO -->
-      <section class="bento-card bento-connect animate-delay-3">
+      <section class="bento-card bento-connect animate-delay-4">
         <h2>Let's Connect</h2>
-        <p>I'm open to new opportunities, collaborations, and conversations about tech.</p>
+        <p>I'm open to thoughtful product engineering conversations, especially around mobile products, AI systems, and ambiguous ideas that need a builder.</p>
         <div class="social-links">
           <a href="https://github.com/juanobrach" target="_blank" rel="noopener noreferrer" class="btn">
             <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -139,6 +175,7 @@ import Footer from '../components/Footer.astro';
       inset 0 1px 1px rgba(255, 255, 255, 0.04),
       var(--shadow-card);
     transition: all var(--transition);
+    min-width: 0;
   }
 
   .bento-card:hover {
@@ -179,13 +216,17 @@ import Footer from '../components/Footer.astro';
     grid-column: span 7;
   }
 
-  .bento-stack {
+  .bento-how {
+    grid-column: span 7;
+  }
+
+  .bento-stack,
+  .bento-creative {
     grid-column: span 5;
-    grid-row: span 2;
   }
 
   .bento-connect {
-    grid-column: span 7;
+    grid-column: span 12;
     justify-content: center;
   }
 
@@ -232,15 +273,17 @@ import Footer from '../components/Footer.astro';
     font-size: 3.25rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
-    letter-spacing: -0.04em;
+    letter-spacing: 0;
     line-height: 1.1;
+    overflow-wrap: break-word;
   }
 
   .maker-subtitle {
     font-size: 1.4rem;
     color: var(--accent-teal);
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     font-weight: 500;
+    overflow-wrap: break-word;
   }
 
   .bento-card h2 {
@@ -258,10 +301,41 @@ import Footer from '../components/Footer.astro';
     color: var(--text-secondary);
     line-height: 1.8;
     margin-bottom: 1.25rem;
+    overflow-wrap: break-word;
   }
 
   .card-body p:last-child {
     margin-bottom: 0;
+  }
+
+  /* Principles */
+  .principles-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .principles-list li {
+    min-width: 0;
+    padding: 1.15rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .principles-list strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .principles-list span {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.86rem;
+    line-height: 1.65;
   }
 
   /* Stack List */
@@ -360,7 +434,9 @@ import Footer from '../components/Footer.astro';
   /* Responsive */
   @media (max-width: 900px) {
     .bento-journey { grid-column: span 12; }
+    .bento-how { grid-column: span 12; }
     .bento-stack { grid-column: span 12; grid-row: auto; }
+    .bento-creative { grid-column: span 12; }
     .bento-connect { grid-column: span 12; }
   }
 
@@ -393,6 +469,10 @@ import Footer from '../components/Footer.astro';
 
     .bento-card {
       padding: 2rem 1.5rem;
+    }
+
+    .principles-list {
+      grid-template-columns: 1fr;
     }
 
     .social-links {

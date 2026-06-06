@@ -1,14 +1,16 @@
 ---
 import ChatWidget from '../components/ChatWidget.astro';
+import SiteNav from '../components/SiteNav.astro';
 
 export interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = 'Senior Software Engineer — Building scalable apps from enterprise platforms to Micro-SaaS products.' } = Astro.props;
+const { title, description = 'Senior Product Engineer turning ambiguous product ideas into shipped mobile, AI, and web systems.' } = Astro.props;
 const ogImage = new URL('/og-image.png', Astro.site).href;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+const cloudflareAnalyticsToken = import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
 ---
 
 <!doctype html>
@@ -44,10 +46,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
 
-    <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": ""}'></script>
+    {cloudflareAnalyticsToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: cloudflareAnalyticsToken })}
+      />
+    )}
   </head>
   <body>
+    <SiteNav />
     <slot />
     <ChatWidget />
   </body>

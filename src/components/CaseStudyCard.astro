@@ -1,0 +1,168 @@
+---
+import type { CaseStudy } from '../data/caseStudies';
+
+export interface Props {
+  study: CaseStudy;
+  featured?: boolean;
+}
+
+const { study, featured = false } = Astro.props;
+---
+
+<a href={`/case-studies/${study.slug}`} class:list={['case-card', { featured }]}>
+  <div class="case-top">
+    <span class="case-eyebrow">{study.eyebrow}</span>
+    <span class="case-status">{study.status}</span>
+  </div>
+  <h3>{study.title}</h3>
+  <p>{study.thesis}</p>
+  <div class="case-domains">
+    {study.domains.slice(0, 4).map((domain) => (
+      <span>{domain}</span>
+    ))}
+  </div>
+  <div class="case-evidence">
+    {study.evidence.slice(0, 3).map((item) => (
+      <span>{item}</span>
+    ))}
+  </div>
+  <span class="case-link">Read case study -></span>
+</a>
+
+<style>
+  .case-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-height: 100%;
+    padding: 1.65rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    color: inherit;
+    text-decoration: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04), var(--shadow-card);
+    transition: all var(--transition);
+  }
+
+  .case-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-hero);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .case-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-card-hover);
+    background: var(--bg-card-hover);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), var(--shadow-card-hover);
+  }
+
+  .case-card:hover::before {
+    opacity: 1;
+  }
+
+  .case-card.featured {
+    background: linear-gradient(160deg, rgba(20, 184, 166, 0.07), rgba(16, 22, 26, 0.46));
+  }
+
+  .case-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .case-eyebrow,
+  .case-status {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .case-eyebrow {
+    color: var(--accent-teal);
+  }
+
+  .case-status {
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    overflow-wrap: break-word;
+  }
+
+  p {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .case-domains,
+  .case-evidence {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .case-domains span,
+  .case-evidence span {
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .case-domains span {
+    padding: 0.25rem 0.6rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .case-evidence span {
+    padding: 0.25rem 0.55rem;
+    color: var(--accent-teal);
+    border: 1px solid rgba(20, 184, 166, 0.16);
+    background: rgba(20, 184, 166, 0.06);
+  }
+
+  .case-link {
+    color: var(--accent-teal);
+    font-size: 0.82rem;
+    font-weight: 800;
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .case-card {
+      padding: 1.35rem;
+    }
+
+    .case-top {
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .case-status {
+      text-align: left;
+    }
+  }
+</style>

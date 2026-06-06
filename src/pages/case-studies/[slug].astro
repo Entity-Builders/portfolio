@@ -1,0 +1,41 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import CaseStudyDetail from '../../components/CaseStudyDetail.astro';
+import { caseStudies } from '../../data/caseStudies';
+import type { CaseStudy } from '../../data/caseStudies';
+
+export function getStaticPaths() {
+  return caseStudies.map((study, index) => ({
+    params: { slug: study.slug },
+    props: {
+      study,
+      nextStudy: caseStudies[(index + 1) % caseStudies.length],
+    },
+  }));
+}
+
+interface Props {
+  study: CaseStudy;
+  nextStudy: CaseStudy;
+}
+
+const { study, nextStudy } = Astro.props;
+---
+
+<Layout
+  title={`${study.title} - Juan Obrach Case Study`}
+  description={study.description}
+>
+  <main>
+    <CaseStudyDetail study={study} nextStudy={nextStudy} />
+    <Footer />
+  </main>
+</Layout>
+
+<style>
+  main {
+    position: relative;
+    z-index: 1;
+  }
+</style>
