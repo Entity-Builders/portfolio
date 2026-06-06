@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro preferences disable devToolbar && astro dev",
     "build": "astro build",
+    "deploy:prod": "astro build --mode production && ../../node_modules/.bin/wrangler deploy",
     "preview": "astro preview",
     "cv:build": "node scripts/build-cv.mjs",
     "social:drafts": "node scripts/generate-social-drafts.mjs"
