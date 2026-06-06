@@ -14,12 +14,12 @@ export interface Props {
 const { name, tagline, platform, icon, slug, features, category, downloadUrl, index = 0 } = Astro.props;
 
 const categoryColors: Record<string, string> = {
-  'developer-tools': '#14B8A6', /* Teal */
-  'finance': '#10B981', /* Emerald */
-  'lifestyle': '#F59E0B', /* Amber */
+  'developer-tools': '#99F6E4',
+  'finance': '#6EE7B7',
+  'lifestyle': '#FCD34D',
 };
 
-const accentColor = categoryColors[category] || '#14B8A6';
+const accentColor = categoryColors[category] || '#99F6E4';
 ---
 
 <a href={`/apps/${slug}`} class={`card animate-fade-in animate-delay-${index + 1}`} style={`--accent: ${accentColor}`}>
@@ -141,7 +141,7 @@ const accentColor = categoryColors[category] || '#14B8A6';
     display: flex;
     flex-direction: column;
     border-radius: inherit;
-    background: rgba(10, 15, 18, 0.4); /* Inner background to preserve blur deeply */
+    background: rgba(9, 14, 17, 0.46);
     transition: background var(--transition), transform var(--transition);
   }
 
@@ -172,7 +172,7 @@ const accentColor = categoryColors[category] || '#14B8A6';
     padding: 0.25rem 0.625rem;
     border: 1px solid var(--border-subtle);
     border-radius: 100px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--surface-muted);
   }
 
   .card-title {
@@ -224,7 +224,7 @@ const accentColor = categoryColors[category] || '#14B8A6';
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--accent);
-    transition: all var(--transition);
+    transition: color var(--transition), letter-spacing var(--transition);
   }
 
   .card:hover .card-cta {

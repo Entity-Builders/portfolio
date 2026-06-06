@@ -129,7 +129,7 @@ const { study, nextStudy } = Astro.props;
   .case-eyebrow,
   .section-kicker {
     display: block;
-    color: var(--accent-teal);
+    color: var(--accent-teal-soft);
     font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 0.1em;
@@ -164,7 +164,7 @@ const { study, nextStudy } = Astro.props;
   .case-meta span {
     color: var(--text-secondary);
     border: 1px solid var(--border-subtle);
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--surface-muted);
     border-radius: 999px;
     padding: 0.35rem 0.75rem;
     font-size: 0.72rem;
@@ -291,7 +291,7 @@ const { study, nextStudy } = Astro.props;
     min-height: 44px;
     padding: 0.75rem 1.1rem;
     border-radius: 999px;
-    color: #fff;
+    color: var(--text-on-accent);
     background: var(--gradient-hero);
     font-size: 0.86rem;
     font-weight: 800;
@@ -299,7 +299,7 @@ const { study, nextStudy } = Astro.props;
   }
 
   .case-action.secondary {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--surface-muted);
     color: var(--text-primary);
     border: 1px solid var(--border-card);
   }

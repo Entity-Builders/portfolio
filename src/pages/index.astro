@@ -162,11 +162,16 @@ const latestPosts = allPosts
     flex-shrink: 0;
     text-decoration: none;
     color: inherit;
-    transition: all var(--transition);
+    transition:
+      transform var(--transition),
+      border-color var(--transition),
+      background var(--transition),
+      box-shadow var(--transition);
   }
 
   .exp-chip:hover {
     border-color: var(--border-card-hover);
+    background: var(--bg-card-hover);
     transform: translateY(-2px);
     box-shadow: var(--shadow-card-hover);
   }
@@ -239,7 +244,11 @@ const latestPosts = allPosts
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    transition: all var(--transition);
+    transition:
+      transform var(--transition),
+      border-color var(--transition),
+      background var(--transition),
+      box-shadow var(--transition);
     box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04), var(--shadow-card);
     position: relative;
     overflow: hidden;
@@ -270,7 +279,7 @@ const latestPosts = allPosts
   /* First card spans full width */
   .project-highlight {
     grid-column: span 2;
-    background: linear-gradient(160deg, rgba(20, 184, 166, 0.06), rgba(16, 22, 26, 0.4));
+    background: linear-gradient(160deg, rgba(45, 212, 191, 0.045), rgba(18, 24, 29, 0.56), rgba(214, 168, 86, 0.035));
   }
 
   .project-badge {
@@ -304,7 +313,7 @@ const latestPosts = allPosts
     font-size: 0.7rem;
     font-weight: 500;
     padding: 0.25rem 0.6rem;
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--surface-muted);
     border: 1px solid var(--border-subtle);
     border-radius: 100px;
     color: var(--text-muted);
@@ -422,7 +431,11 @@ const latestPosts = allPosts
     -webkit-backdrop-filter: blur(20px);
     text-decoration: none;
     color: inherit;
-    transition: all var(--transition);
+    transition:
+      transform var(--transition),
+      border-color var(--transition),
+      box-shadow var(--transition),
+      background var(--transition);
     position: relative;
     overflow: hidden;
   }
@@ -470,8 +483,8 @@ const latestPosts = allPosts
     font-size: 0.6rem;
     font-weight: 600;
     padding: 0.15rem 0.45rem;
-    background: rgba(20, 184, 166, 0.07);
-    border: 1px solid rgba(20, 184, 166, 0.15);
+    background: var(--accent-surface);
+    border: 1px solid var(--accent-border);
     border-radius: 100px;
     color: var(--accent-teal);
   }

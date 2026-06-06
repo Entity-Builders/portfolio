@@ -48,11 +48,11 @@ const { frontmatter, slug } = Astro.props;
 const { name, tagline, platform, icon, features, category, downloadUrl } = frontmatter;
 
 const categoryColors: Record<string, string> = {
-  'developer-tools': '#6366f1',
-  'finance': '#34d399',
-  'lifestyle': '#fbbf24',
+  'developer-tools': '#A5B4FC',
+  'finance': '#6EE7B7',
+  'lifestyle': '#FCD34D',
 };
-const accentColor = categoryColors[category] || '#6366f1';
+const accentColor = categoryColors[category] || '#A5B4FC';
 ---
 
 <Layout title={`${name} — Entity Builders`} description={tagline}>
@@ -215,11 +215,11 @@ const accentColor = categoryColors[category] || '#6366f1';
   .download-btn {
     display: inline-block;
     padding: 0.875rem 2rem;
-    color: white;
+    color: var(--text-on-accent);
     font-weight: 700;
     font-size: 0.95rem;
     border-radius: var(--radius-md);
-    transition: all var(--transition);
+    transition: transform var(--transition), box-shadow var(--transition);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   }
 
