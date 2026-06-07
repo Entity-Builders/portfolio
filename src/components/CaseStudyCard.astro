@@ -9,7 +9,12 @@ export interface Props {
 const { study, featured = false } = Astro.props;
 ---
 
-<a href={`/case-studies/${study.slug}`} class:list={['case-card', { featured }]}>
+<a
+  href={`/case-studies/${study.slug}`}
+  class:list={['case-card', { featured }]}
+  data-analytics-surface="case_study_card"
+  data-analytics-destination="case_study"
+>
   <div class="case-top">
     <span class="case-eyebrow">{study.eyebrow}</span>
     <span class="case-status">{study.status}</span>

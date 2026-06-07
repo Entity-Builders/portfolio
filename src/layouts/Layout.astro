@@ -1,16 +1,39 @@
 ---
 import ChatWidget from '../components/ChatWidget.astro';
 import SiteNav from '../components/SiteNav.astro';
+import AnalyticsScripts from '../components/AnalyticsScripts.astro';
+import type { JsonLd } from '../lib/seo';
 
 export interface Props {
   title: string;
   description?: string;
+  pageType?:
+    | 'home'
+    | 'about'
+    | 'case_studies_index'
+    | 'case_study'
+    | 'writing_index'
+    | 'article'
+    | 'app_detail'
+    | 'unknown';
+  slug?: string;
+  structuredData?: JsonLd | JsonLd[];
 }
 
-const { title, description = 'Senior Product Engineer turning ambiguous product ideas into shipped mobile, AI, and web systems.' } = Astro.props;
+const {
+  title,
+  description = 'Senior Product Engineer turning ambiguous product ideas into shipped mobile, AI, and web systems.',
+  pageType = 'unknown',
+  slug,
+  structuredData = [],
+} = Astro.props;
 const ogImage = new URL('/og-image.png', Astro.site).href;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 const cloudflareAnalyticsToken = import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
+const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const jsonLdItems = Array.isArray(structuredData)
+  ? structuredData
+  : [structuredData];
 ---
 
 <!doctype html>
@@ -21,6 +44,9 @@ const cloudflareAnalyticsToken = import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS
     <meta name="description" content={description} />
     <meta name="author" content="Juan Manuel Obrach" />
     <meta name="theme-color" content="#090E11" />
+    {googleSiteVerification && (
+      <meta name="google-site-verification" content={googleSiteVerification} />
+    )}
     
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
@@ -47,6 +73,10 @@ const cloudflareAnalyticsToken = import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
 
+    {jsonLdItems.map((item) => (
+      <script type="application/ld+json" set:html={JSON.stringify(item)} />
+    ))}
+
     {cloudflareAnalyticsToken && (
       <script
         defer
@@ -54,8 +84,9 @@ const cloudflareAnalyticsToken = import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS
         data-cf-beacon={JSON.stringify({ token: cloudflareAnalyticsToken })}
       />
     )}
+    <AnalyticsScripts title={title} pageType={pageType} slug={slug} />
   </head>
-  <body>
+  <body data-page-type={pageType} data-page-slug={slug}>
     <SiteNav />
     <slot />
     <ChatWidget />

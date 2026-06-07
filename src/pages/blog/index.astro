@@ -21,11 +21,12 @@ const topTags = Object.entries(tagCounts)
 
 <Layout
   title="Writing — Juan Obrach"
-  description="Technical articles on React Native, Expo, monorepos, and building Micro-SaaS products from the trenches of solo development."
+  description="Technical writing by Juan Obrach on React Native, Expo, monorepos, OpenSpec, Supabase, AI workflows, and building product systems in the open."
+  pageType="writing_index"
 >
   <main>
     <!-- Blog Hero -->
-    <section class="blog-hero">
+    <section class="blog-hero" data-analytics-surface="writing_hero">
       <a href="/" class="blog-nav-home">
         <span>⚡</span> juanobrach.dev
       </a>
@@ -51,7 +52,7 @@ const topTags = Object.entries(tagCounts)
     </section>
 
     <!-- Articles Grid -->
-    <section class="articles-section">
+    <section class="articles-section" data-analytics-surface="article_index">
       <div class="articles-list">
         {posts.map((post, i) => {
           const date = new Intl.DateTimeFormat('en-US', {

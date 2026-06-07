@@ -12,12 +12,16 @@ const latestPosts = allPosts
   .slice(0, 3);
 ---
 
-<Layout title="Juan Obrach - Senior Product Engineer" description="Senior Product Engineer focused on mobile, AI, and end-to-end product execution. Built in scale-up teams and through independent product work.">
+<Layout
+  title="Juan Obrach - Senior Product Engineer"
+  description="Senior Product Engineer focused on React Native, AI systems, and end-to-end product execution. Built in scale-up teams and through independent product work."
+  pageType="home"
+>
   <main>
     <Hero />
 
     <!-- Compact Experience Bar -->
-    <section class="experience-bar">
+    <section class="experience-bar" data-analytics-surface="experience_bar">
       <div class="exp-track">
         <a href="https://www.rbi.com" target="_blank" rel="noopener noreferrer" class="exp-chip">
           <span class="exp-emoji">🍔</span>
@@ -51,7 +55,7 @@ const latestPosts = allPosts
     </section>
 
     <!-- Featured Case Studies -->
-    <section class="featured">
+    <section class="featured" data-analytics-surface="featured_case_studies">
       <h2 class="featured-title">Featured Case Studies</h2>
       <p class="featured-sub">Evidence for technical leaders: product judgment, systems, tradeoffs, and shipped work.</p>
 
@@ -67,7 +71,7 @@ const latestPosts = allPosts
     </section>
 
     <!-- Latest Writing -->
-    <section class="writing-section">
+    <section class="writing-section" data-analytics-surface="latest_writing">
       <div class="writing-header">
         <div>
           <h2 class="writing-title">Latest Writing</h2>

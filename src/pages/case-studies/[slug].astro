@@ -4,6 +4,7 @@ import Footer from '../../components/Footer.astro';
 import CaseStudyDetail from '../../components/CaseStudyDetail.astro';
 import { caseStudies } from '../../data/caseStudies';
 import type { CaseStudy } from '../../data/caseStudies';
+import { absoluteUrl, buildBreadcrumbJsonLd } from '../../lib/seo';
 
 export function getStaticPaths() {
   return caseStudies.map((study, index) => ({
@@ -21,11 +22,20 @@ interface Props {
 }
 
 const { study, nextStudy } = Astro.props;
+const caseStudyUrl = absoluteUrl(`/case-studies/${study.slug}/`);
+const structuredData = buildBreadcrumbJsonLd([
+  { name: 'Home', url: absoluteUrl('/') },
+  { name: 'Case Studies', url: absoluteUrl('/case-studies/') },
+  { name: study.title, url: caseStudyUrl },
+]);
 ---
 
 <Layout
   title={`${study.title} - Juan Obrach Case Study`}
   description={study.description}
+  pageType="case_study"
+  slug={study.slug}
+  structuredData={structuredData}
 >
   <main>
     <CaseStudyDetail study={study} nextStudy={nextStudy} />

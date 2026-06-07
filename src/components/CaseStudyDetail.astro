@@ -87,13 +87,14 @@ const { study, nextStudy } = Astro.props;
     </section>
   </div>
 
-  <footer class="case-footer-actions">
+  <footer class="case-footer-actions" data-analytics-surface="case_study_end">
     <a href="/case-studies" class="case-action secondary">All case studies</a>
     {nextStudy && (
       <a href={`/case-studies/${nextStudy.slug}`} class="case-action">
         Next: {nextStudy.title}
       </a>
     )}
+    <a href="/about" class="case-action secondary">About Juan</a>
     <a href="mailto:juanobrach@gmail.com" class="case-action">Start a conversation</a>
   </footer>
 </article>

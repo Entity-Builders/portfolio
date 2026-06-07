@@ -1,9 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import { buildProfilePageJsonLd } from '../lib/seo';
 ---
 
-<Layout title="About - Juan Manuel Obrach" description="Senior Product Engineer and independent creator building mobile, AI, and end-to-end product systems from scale-up teams to Entity Builders.">
+<Layout
+  title="About Juan Obrach - Senior Product Engineer"
+  description="Juan Obrach is a Senior Product Engineer specializing in React Native, AI systems, mobile architecture, and product engineering across scale-up teams and Entity Builders."
+  pageType="about"
+  structuredData={buildProfilePageJsonLd()}
+>
   <main class="about-page">
     
     <div class="bento-container animate-fade-in">
@@ -107,7 +113,7 @@ import Footer from '../components/Footer.astro';
       </section>
 
       <!-- CONNECT BENTO -->
-      <section class="bento-card bento-connect animate-delay-4">
+      <section class="bento-card bento-connect animate-delay-4" data-analytics-surface="about_contact">
         <h2>Let's Connect</h2>
         <p>I'm open to thoughtful product engineering conversations, especially around mobile products, AI systems, and ambiguous ideas that need a builder.</p>
         <div class="social-links">

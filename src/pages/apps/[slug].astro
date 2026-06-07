@@ -55,13 +55,18 @@ const categoryColors: Record<string, string> = {
 const accentColor = categoryColors[category] || '#A5B4FC';
 ---
 
-<Layout title={`${name} — Entity Builders`} description={tagline}>
+<Layout
+  title={`${name} — Entity Builders`}
+  description={tagline}
+  pageType="app_detail"
+  slug={slug}
+>
   <main>
-    <nav class="nav">
+    <nav class="nav" data-analytics-surface="app_detail_nav">
       <a href="/" class="nav-back">← Back to all apps</a>
     </nav>
 
-    <article class="app-detail">
+    <article class="app-detail" data-analytics-surface="app_detail">
       <div class="app-header">
         <span class="app-icon">{icon}</span>
         <div>
@@ -89,8 +94,13 @@ const accentColor = categoryColors[category] || '#A5B4FC';
       </section>
 
       {downloadUrl && (
-        <section class="app-download">
-          <a href={downloadUrl} class="download-btn" style={`background: ${accentColor}`}>
+        <section class="app-download" data-analytics-surface="app_download">
+          <a
+            href={downloadUrl}
+            class="download-btn"
+            style={`background: ${accentColor}`}
+            data-analytics-destination="external"
+          >
             Download {name}
           </a>
         </section>

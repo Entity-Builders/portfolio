@@ -1,12 +1,16 @@
 ---
 import ChatWidget from '../components/ChatWidget.astro';
 import SiteNav from '../components/SiteNav.astro';
+import AnalyticsScripts from '../components/AnalyticsScripts.astro';
+import type { JsonLd } from '../lib/seo';
 
 export interface Props {
   title: string;
   description?: string;
   date?: Date;
   tags?: string[];
+  slug?: string;
+  structuredData?: JsonLd | JsonLd[];
 }
 
 const {
@@ -14,14 +18,20 @@ const {
   description = 'Technical articles about React Native, Expo, monorepos, and building Micro-SaaS.',
   date,
   tags = [],
+  slug,
+  structuredData = [],
 } = Astro.props;
 
 const ogImage = new URL('/og-image.png', Astro.site).href;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 const cloudflareAnalyticsToken = import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
+const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 const formattedDate = date
   ? new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date)
   : null;
+const jsonLdItems = Array.isArray(structuredData)
+  ? structuredData
+  : [structuredData];
 
 // Estimate reading time (avg 200 wpm)
 ---
@@ -34,6 +44,9 @@ const formattedDate = date
     <meta name="description" content={description} />
     <meta name="author" content="Juan Manuel Obrach" />
     <meta name="theme-color" content="#090E11" />
+    {googleSiteVerification && (
+      <meta name="google-site-verification" content={googleSiteVerification} />
+    )}
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
@@ -60,6 +73,10 @@ const formattedDate = date
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} — Juan Obrach</title>
 
+    {jsonLdItems.map((item) => (
+      <script type="application/ld+json" set:html={JSON.stringify(item)} />
+    ))}
+
     {cloudflareAnalyticsToken && (
       <script
         defer
@@ -67,12 +84,13 @@ const formattedDate = date
         data-cf-beacon={JSON.stringify({ token: cloudflareAnalyticsToken })}
       />
     )}
+    <AnalyticsScripts title={`${title} — Juan Obrach`} pageType="article" slug={slug} />
   </head>
-  <body>
+  <body data-page-type="article" data-page-slug={slug}>
     <SiteNav />
     <div class="blog-chrome">
       <!-- Top nav bar -->
-      <nav class="blog-nav">
+      <nav class="blog-nav" data-analytics-surface="article_nav">
         <a href="/" class="nav-home">
           <span class="nav-logo">⚡</span>
           <span>Juan Obrach</span>
@@ -101,15 +119,17 @@ const formattedDate = date
           )}
         </header>
 
-        <div class="prose">
+        <div class="prose" data-analytics-surface="article_body">
           <slot />
         </div>
 
-        <footer class="article-footer">
+        <footer class="article-footer" data-analytics-surface="article_end">
           <div class="footer-divider"></div>
           <div class="footer-actions">
             <a href="/blog" class="back-link">← Back to all articles</a>
-            <a href="/" class="home-link">juanobrach.dev ↗</a>
+            <a href="/case-studies" class="home-link">Case studies</a>
+            <a href="/about" class="home-link">About Juan</a>
+            <a href="mailto:juanobrach@gmail.com" class="home-link">Contact</a>
           </div>
         </footer>
       </article>
@@ -250,7 +270,9 @@ const formattedDate = date
   .footer-actions {
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
     align-items: center;
+    flex-wrap: wrap;
   }
 
   .back-link,

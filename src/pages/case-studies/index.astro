@@ -8,9 +8,10 @@ import { caseStudies } from '../../data/caseStudies';
 <Layout
   title="Case Studies - Senior Product Engineer, AI & Mobile Systems"
   description="Senior Product Engineering case studies by Juan Obrach: scale-up mobile work, AI learning systems, B2B workflows, and independent product infrastructure."
+  pageType="case_studies_index"
 >
   <main class="case-studies-page">
-    <section class="case-index-hero">
+    <section class="case-index-hero" data-analytics-surface="case_studies_hero">
       <div class="case-eyebrow">Senior Product Engineering Case Studies</div>
       <h1>How I turn ambiguous product ideas into shipped systems.</h1>
       <p>
@@ -24,7 +25,7 @@ import { caseStudies } from '../../data/caseStudies';
       </div>
     </section>
 
-    <section class="case-index-grid" aria-label="Case studies">
+    <section class="case-index-grid" aria-label="Case studies" data-analytics-surface="case_studies_grid">
       {caseStudies.map((study, index) => (
         <CaseStudyCard study={study} featured={index === 0} />
       ))}

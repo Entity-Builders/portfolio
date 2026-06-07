@@ -318,12 +318,17 @@ const assistantSupabaseAnonKey = assistantSupabaseUrl
 >
   (function() {
     const EDGE_URL = supabaseUrl ? supabaseUrl + '/functions/v1/portfolio-chat' : '';
+    const supabaseKeyIsJwt = supabaseAnonKey && supabaseAnonKey.startsWith('eyJ');
     const EDGE_HEADERS = {
       'Content-Type': 'application/json',
       ...(supabaseAnonKey
         ? {
-            Authorization: 'Bearer ' + supabaseAnonKey,
             apikey: supabaseAnonKey,
+          }
+        : {}),
+      ...(supabaseKeyIsJwt
+        ? {
+            Authorization: 'Bearer ' + supabaseAnonKey,
           }
         : {}),
     };
@@ -341,6 +346,7 @@ const assistantSupabaseAnonKey = assistantSupabaseUrl
     let isOpen = false;
     let history = [];
     let isLoading = false;
+    let hadRecoverableError = false;
 
     toggle.addEventListener('click', () => {
       isOpen = !isOpen;
@@ -349,12 +355,34 @@ const assistantSupabaseAnonKey = assistantSupabaseUrl
       iconClose.style.display = isOpen ? 'block' : 'none';
       badge.style.display = isOpen ? 'none' : 'block';
       if (isOpen) input.focus();
+      trackAssistant(isOpen ? 'assistant_open' : 'assistant_close', {
+        action: isOpen ? 'open' : 'close',
+        assistant_outcome: 'toggle',
+      });
     });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const text = input.value.trim();
       if (!text || isLoading) return;
+      const question_topic = classifyQuestionTopic(text);
+      const message_length_bucket = messageLengthBucket(text);
+
+      if (hadRecoverableError) {
+        trackAssistant('assistant_retry', {
+          action: 'retry',
+          question_topic,
+          message_length_bucket,
+          assistant_outcome: 'retry_after_error',
+        });
+      }
+
+      trackAssistant('assistant_submit', {
+        action: 'submit',
+        question_topic,
+        message_length_bucket,
+        assistant_outcome: 'submitted',
+      });
 
       // Add user message
       addMessage(text, 'user');
@@ -369,6 +397,13 @@ const assistantSupabaseAnonKey = assistantSupabaseUrl
       if (!EDGE_URL) {
         typingEl.remove();
         addMessage('Assistant is not configured yet. Try again later.', 'assistant');
+        trackAssistant('assistant_unavailable', {
+          action: 'error',
+          question_topic,
+          message_length_bucket,
+          assistant_outcome: 'missing_edge_url',
+        });
+        hadRecoverableError = true;
         isLoading = false;
         sendBtn.disabled = false;
         input.focus();
@@ -379,7 +414,16 @@ const assistantSupabaseAnonKey = assistantSupabaseUrl
         const res = await fetch(EDGE_URL, {
           method: 'POST',
           headers: EDGE_HEADERS,
-          body: JSON.stringify({ history: history.slice(-10), message: text }),
+          body: JSON.stringify({
+            history: history.slice(-10),
+            message: text,
+            source: {
+              ...getSourceMetadata(),
+              surface: 'assistant',
+              question_topic,
+              message_length_bucket,
+            },
+          }),
         });
 
         const data = await res.json();
@@ -388,9 +432,23 @@ const assistantSupabaseAnonKey = assistantSupabaseUrl
         const reply = data.response || data.error || 'Something went wrong.';
         addMessage(reply, 'assistant');
         history.push({ role: 'assistant', content: reply });
+        trackAssistant(res.ok ? 'assistant_response' : 'assistant_error', {
+          action: res.ok ? 'response' : 'error',
+          question_topic,
+          message_length_bucket,
+          assistant_outcome: res.status === 429 ? 'rate_limited' : res.ok ? 'answered' : 'endpoint_error',
+        });
+        hadRecoverableError = !res.ok;
       } catch (err) {
         typingEl.remove();
         addMessage('Connection error. Try again later.', 'assistant');
+        trackAssistant('assistant_error', {
+          action: 'error',
+          question_topic,
+          message_length_bucket,
+          assistant_outcome: 'network_error',
+        });
+        hadRecoverableError = true;
       }
 
       isLoading = false;
@@ -411,6 +469,28 @@ const assistantSupabaseAnonKey = assistantSupabaseUrl
       const d = document.createElement('div');
       d.textContent = str;
       return d.innerHTML;
+    }
+
+    function trackAssistant(event, properties) {
+      window.portfolioAnalytics?.trackAssistant?.(event, properties);
+    }
+
+    function classifyQuestionTopic(text) {
+      return window.portfolioAnalytics?.classifyQuestionTopic?.(text) || 'unknown';
+    }
+
+    function messageLengthBucket(text) {
+      return window.portfolioAnalytics?.messageLengthBucket?.(text) || 'unknown';
+    }
+
+    function getSourceMetadata() {
+      return (
+        window.portfolioAnalytics?.getSourceMetadata?.() || {
+          route: window.location.pathname,
+          page_type: document.body?.dataset.pageType || 'unknown',
+          slug: document.body?.dataset.pageSlug || undefined,
+        }
+      );
     }
   })();
 </script>

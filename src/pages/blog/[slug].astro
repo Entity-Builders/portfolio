@@ -1,6 +1,11 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BlogLayout from '../../layouts/BlogLayout.astro';
+import {
+  absoluteUrl,
+  buildArticleJsonLd,
+  buildBreadcrumbJsonLd,
+} from '../../lib/seo';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -14,6 +19,21 @@ type Props = { post: CollectionEntry<'blog'> };
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+const articleUrl = absoluteUrl(`/blog/${post.slug}/`);
+const structuredData = [
+  buildArticleJsonLd({
+    title: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.date,
+    url: articleUrl,
+    tags: post.data.tags,
+  }),
+  buildBreadcrumbJsonLd([
+    { name: 'Home', url: absoluteUrl('/') },
+    { name: 'Writing', url: absoluteUrl('/blog/') },
+    { name: post.data.title, url: articleUrl },
+  ]),
+];
 ---
 
 <BlogLayout
@@ -21,6 +41,8 @@ const { Content } = await post.render();
   description={post.data.description}
   date={post.data.date}
   tags={post.data.tags}
+  slug={post.slug}
+  structuredData={structuredData}
 >
   <Content />
 </BlogLayout>

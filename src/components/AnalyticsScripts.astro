@@ -1,0 +1,92 @@
+---
+type PageType =
+  | 'home'
+  | 'about'
+  | 'case_studies_index'
+  | 'case_study'
+  | 'writing_index'
+  | 'article'
+  | 'app_detail'
+  | 'unknown';
+
+export interface Props {
+  title: string;
+  pageType?: PageType;
+  slug?: string;
+}
+
+const { title, pageType = 'unknown', slug } = Astro.props;
+const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || '';
+const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY || '';
+const posthogHost =
+  import.meta.env.PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
+const shouldIncludeConfig = Boolean(gaMeasurementId || posthogKey);
+
+const config = {
+  gaMeasurementId,
+  posthogKey,
+  posthogHost,
+  environment: import.meta.env.PROD ? 'production' : 'development',
+  route: Astro.url.pathname,
+  pageType,
+  slug,
+  title,
+};
+---
+
+{
+  shouldIncludeConfig && (
+    <script
+      id="portfolio-analytics-config"
+      type="application/json"
+      set:html={JSON.stringify(config)}
+    />
+  )
+}
+
+{
+  gaMeasurementId && (
+    <script
+      is:inline
+      set:html={`
+        (function () {
+          var el = document.getElementById('portfolio-analytics-config');
+          if (!el || !el.textContent) return;
+
+          try {
+            var config = JSON.parse(el.textContent);
+            if (!config.gaMeasurementId) return;
+
+            if (!document.getElementById('portfolio-ga-script')) {
+              var script = document.createElement('script');
+              script.id = 'portfolio-ga-script';
+              script.async = true;
+              script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(config.gaMeasurementId);
+              document.head.appendChild(script);
+            }
+
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || function () {
+              window.dataLayer.push(arguments);
+            };
+            window.gtag('js', new Date());
+            window.gtag('config', config.gaMeasurementId, {
+              page_path: config.route,
+              page_title: config.title
+            });
+          } catch (_) {}
+        })();
+      `}
+    />
+  )
+}
+
+{
+  posthogKey && (
+    <script>
+      import { initPortfolioAnalyticsFromDom } from '../lib/portfolioAnalytics';
+
+      initPortfolioAnalyticsFromDom();
+    </script>
+  )
+}
