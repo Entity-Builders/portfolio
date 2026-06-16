@@ -3,6 +3,7 @@ export type CaseStudy = {
   title: string;
   eyebrow: string;
   thesis: string;
+  outcome?: string;
   description: string;
   context: string;
   timeframe: string;
@@ -32,6 +33,8 @@ export const caseStudies: CaseStudy[] = [
     eyebrow: 'Scale-up production work',
     thesis:
       'Mobile product work inside a real ordering business, where reliability, regional complexity, and team execution matter.',
+    outcome:
+      'Proof of production judgment in mobile ordering flows across USA, Europe, and Canada.',
     description:
       'Frontend architecture and stabilization work for a React Native ordering product used across the USA, Europe, and Canada.',
     context:
@@ -95,6 +98,8 @@ export const caseStudies: CaseStudy[] = [
     eyebrow: 'AI learning product',
     thesis:
       'A translation-first PWA that turns everyday translation history into personalized language learning.',
+    outcome:
+      'Turns daily translation moments into saved learning material, quota-aware AI work, and study paths.',
     description:
       'Flowtranslate keeps translation fast, then uses saved history to generate study articles, grammar feedback, and practice paths.',
     context:
@@ -158,6 +163,8 @@ export const caseStudies: CaseStudy[] = [
     eyebrow: 'B2B workflow product',
     thesis:
       'A B2B tool that turns messy restaurant menus into a live QR experience, an AI guest assistant, and owner analytics.',
+    outcome:
+      'Compresses restaurant setup from messy menu input into review, publish, guest assistant, and analytics loops.',
     description:
       'Tablia imports existing menus from text, PDF, or image, normalizes them into structured data, and publishes a mobile-friendly guest experience.',
     context:
@@ -221,6 +228,8 @@ export const caseStudies: CaseStudy[] = [
     eyebrow: 'Independent operating system',
     thesis:
       'A monorepo and spec-driven workflow for validating multiple products without rebuilding the same foundations every time.',
+    outcome:
+      'Shows how one solo builder compounds product memory, reusable code, and AI-assisted delivery across apps.',
     description:
       "Entity Builders is the operating layer behind Juan's independent products: apps stay thin, shared logic becomes reusable, and OpenSpec preserves product memory.",
     context:

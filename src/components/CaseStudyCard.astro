@@ -20,7 +20,13 @@ const { study, featured = false } = Astro.props;
     <span class="case-status">{study.status}</span>
   </div>
   <h3>{study.title}</h3>
-  <p>{study.thesis}</p>
+  {study.outcome && (
+    <p class="case-outcome">
+      <span>Outcome</span>
+      {study.outcome}
+    </p>
+  )}
+  <p class="case-thesis">{study.thesis}</p>
   <div class="case-domains">
     {study.domains.slice(0, 4).map((domain) => (
       <span>{domain}</span>
@@ -117,7 +123,29 @@ const { study, featured = false } = Astro.props;
     overflow-wrap: break-word;
   }
 
-  p {
+  .case-outcome {
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.75rem 0.85rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--accent-border);
+    background: linear-gradient(135deg, rgba(45, 212, 191, 0.085), rgba(96, 165, 250, 0.035));
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  .case-outcome span {
+    color: var(--accent-teal-soft);
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .case-thesis {
     color: var(--text-secondary);
     font-size: 0.92rem;
     line-height: 1.6;

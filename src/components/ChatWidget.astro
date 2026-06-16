@@ -12,57 +12,68 @@ const assistantSupabaseUrl =
 const assistantSupabaseAnonKey = assistantSupabaseUrl
   ? configuredSupabaseAnonKey
   : '';
+const assistantIsConfigured = Boolean(
+  assistantSupabaseUrl && assistantSupabaseAnonKey
+);
+const publicAssistantSupabaseUrl = assistantIsConfigured
+  ? assistantSupabaseUrl
+  : '';
+const publicAssistantSupabaseAnonKey = assistantIsConfigured
+  ? assistantSupabaseAnonKey
+  : '';
 ---
 
-<div id="chat-widget">
-  <!-- Floating Bubble -->
-  <button id="chat-toggle" aria-label="Chat with AI assistant">
-    <svg id="chat-icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-    </svg>
-    <svg id="chat-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
-    <span class="chat-badge" id="chat-badge">AI</span>
-  </button>
+{assistantIsConfigured && (
+  <div id="chat-widget">
+    <!-- Floating Bubble -->
+    <button id="chat-toggle" aria-label="Chat with AI assistant">
+      <svg id="chat-icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <svg id="chat-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+      <span class="chat-badge" id="chat-badge">AI</span>
+    </button>
 
-  <!-- Chat Window -->
-  <div id="chat-window" class="chat-hidden">
-    <div class="chat-header">
-      <div class="chat-header-info">
-        <div class="chat-avatar">JO</div>
-        <div>
-          <strong>Product Engineering Assistant</strong>
-          <span class="chat-status">Juan's work, systems, and fit</span>
+    <!-- Chat Window -->
+    <div id="chat-window" class="chat-hidden">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <div class="chat-avatar">JO</div>
+          <div>
+            <strong>Product Engineering Assistant</strong>
+            <span class="chat-status">Juan's work, systems, and fit</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div id="chat-messages" class="chat-messages">
-      <div class="chat-msg assistant">
-        <p>Hey! Ask me about Juan's case studies, product engineering work, AI/mobile systems, or collaboration fit.</p>
+      <div id="chat-messages" class="chat-messages">
+        <div class="chat-msg assistant">
+          <p>Hey! Ask me about Juan's case studies, product engineering work, AI/mobile systems, or collaboration fit.</p>
+        </div>
       </div>
-    </div>
 
-    <form id="chat-form" class="chat-input-area">
-      <input
-        type="text"
-        id="chat-input"
-        name="portfolio-question"
-        placeholder="Ask about case studies…"
-        maxlength="500"
-        autocomplete="off"
-      />
-      <button type="submit" id="chat-send" aria-label="Send message">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"></line>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-        </svg>
-      </button>
-    </form>
+      <form id="chat-form" class="chat-input-area">
+        <input
+          type="text"
+          id="chat-input"
+          name="portfolio-question"
+          placeholder="Ask about case studies…"
+          maxlength="500"
+          autocomplete="off"
+        />
+        <button type="submit" id="chat-send" aria-label="Send message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </div>
   </div>
-</div>
+)}
 
 <style>
   /* ── Chat Widget Globals ── */
@@ -312,8 +323,8 @@ const assistantSupabaseAnonKey = assistantSupabaseUrl
 <script
   is:inline
   define:vars={{
-    supabaseUrl: assistantSupabaseUrl,
-    supabaseAnonKey: assistantSupabaseAnonKey,
+    supabaseUrl: publicAssistantSupabaseUrl,
+    supabaseAnonKey: publicAssistantSupabaseAnonKey,
   }}
 >
   (function() {
@@ -342,6 +353,10 @@ const assistantSupabaseAnonKey = assistantSupabaseUrl
     const input = document.getElementById('chat-input');
     const messages = document.getElementById('chat-messages');
     const sendBtn = document.getElementById('chat-send');
+
+    if (!toggle || !chatWindow || !iconOpen || !iconClose || !badge || !form || !input || !messages || !sendBtn) {
+      return;
+    }
 
     let isOpen = false;
     let history = [];
