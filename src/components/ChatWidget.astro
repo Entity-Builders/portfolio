@@ -1,6 +1,8 @@
 ---
 // ChatWidget.astro — Floating AI chat bubble
 // Uses the portfolio-chat Supabase Edge Function
+const assistantFeatureEnabled =
+  import.meta.env.PUBLIC_PORTFOLIO_CHAT_ENABLED === 'true';
 const configuredSupabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || '';
 const configuredSupabaseAnonKey =
   import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
@@ -13,7 +15,7 @@ const assistantSupabaseAnonKey = assistantSupabaseUrl
   ? configuredSupabaseAnonKey
   : '';
 const assistantIsConfigured = Boolean(
-  assistantSupabaseUrl && assistantSupabaseAnonKey
+  assistantFeatureEnabled && assistantSupabaseUrl && assistantSupabaseAnonKey
 );
 const publicAssistantSupabaseUrl = assistantIsConfigured
   ? assistantSupabaseUrl

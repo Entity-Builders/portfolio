@@ -11,6 +11,8 @@ Browser-public configuration:
 - `PUBLIC_POSTHOG_KEY`: PostHog browser project token.
 - `PUBLIC_POSTHOG_HOST`: PostHog host, defaulting to `https://us.i.posthog.com`.
 - `PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN`: Cloudflare Web Analytics token.
+- `PUBLIC_PORTFOLIO_CHAT_ENABLED`: set to `true` only when the public assistant
+  is ready to render.
 - `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY`: public assistant Edge
   Function routing credentials.
 

@@ -31,6 +31,8 @@ const ogImage = new URL('/og-image.png', Astro.site).href;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 const cloudflareAnalyticsToken = import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const portfolioChatEnabled =
+  import.meta.env.PUBLIC_PORTFOLIO_CHAT_ENABLED === 'true';
 const jsonLdItems = Array.isArray(structuredData)
   ? structuredData
   : [structuredData];
@@ -89,7 +91,7 @@ const jsonLdItems = Array.isArray(structuredData)
   <body data-page-type={pageType} data-page-slug={slug}>
     <SiteNav />
     <slot />
-    <ChatWidget />
+    {portfolioChatEnabled && <ChatWidget />}
   </body>
 </html>
 
