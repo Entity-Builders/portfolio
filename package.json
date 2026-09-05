@@ -12,8 +12,13 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
-    "@entity-builders/analytics": "1.0.0",
+    "@entity-builders/analytics": "^1.0.0",
     "astro": "^5.5.0",
     "gray-matter": "^4.0.3"
+  },
+  "packageManager": "yarn@4.13.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Entity-Builders/portfolio.git"
   }
 }
